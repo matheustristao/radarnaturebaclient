@@ -16,6 +16,7 @@ module.exports = {
                         reject(err)
                     } else {
                         db.close();
+                        console.log(JSON.stringify(result));
                         resolve(result);
                     }
                 });
@@ -24,13 +25,42 @@ module.exports = {
 
 
         });
+    },
+
+    returnListaProdutoDeatil: function () {
+
+        return new Promise(function (resolve, reject) {
+
+            MongoClient.connect(url, function (err, db) {
+                if (err) reject(err);
+
+                var dbo = db.db("devAgregador");
+
+                dbo.collection('produtos').aggregate([
+                    {
+                        $lookup:
+                        {
+                            from: 'categorias',
+                            localField: 'idCategoria',
+                            foreignField: 'idCategoria',
+                            as: 'Categoria'
+                        }
+                    },
+                ]).toArray(function (err, result) {
+                    if (err) throw err;
+                    console.log(JSON.stringify(result));
+                    resolve(result);
+                    db.close();
+                });
+
+
+            });
+
+        });
+
     }
 
 }
-
-
-
-
 
 
 /*

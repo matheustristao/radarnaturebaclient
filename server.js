@@ -5,7 +5,7 @@ http.createServer(function (req, res) {
     res.setHeader("Access-Control-Allow-Origin", "*"); //Aqui permite acesso de outro local
     res.writeHead(200, { 'Content-Type': 'text/html' });
 
-    database.returnListaProduto().then(function (result) {
+    database.returnListaProdutoDeatil().then(function (result) {
         res.end(JSON.stringify(result));
     }, function (err) {
         res.end(err);
