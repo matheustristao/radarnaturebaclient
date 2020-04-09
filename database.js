@@ -3,7 +3,7 @@ var url = "mongodb://localhost:27017/devAgregador";
 
 module.exports = {
 
-    returnListaProduto: function () {
+    returnListaProdutoCategoria: function (idCategoria) {
         return new Promise(function (resolve, reject) {
 
             MongoClient.connect(url, function (err, db) {
@@ -11,7 +11,7 @@ module.exports = {
 
                 var dbo = db.db("devAgregador");
 
-                dbo.collection("produtos").find({}).toArray(function (err, result) {
+                dbo.collection("produtos").find({"idCategoria":idCategoria}).toArray(function (err, result) {
                     if (err) {
                         reject(err)
                     } else {
@@ -25,39 +25,6 @@ module.exports = {
 
 
         });
-    },
-
-    returnListaProdutoDeatil: function () {
-
-        return new Promise(function (resolve, reject) {
-
-            MongoClient.connect(url, function (err, db) {
-                if (err) reject(err);
-
-                var dbo = db.db("devAgregador");
-
-                dbo.collection('produtos').aggregate([
-                    {
-                        $lookup:
-                        {
-                            from: 'categorias',
-                            localField: 'idCategoria',
-                            foreignField: 'idCategoria',
-                            as: 'Categoria'
-                        }
-                    },
-                ]).toArray(function (err, result) {
-                    if (err) throw err;
-                    console.log(JSON.stringify(result));
-                    resolve(result);
-                    db.close();
-                });
-
-
-            });
-
-        });
-
     }
 
 }
