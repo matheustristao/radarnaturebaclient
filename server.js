@@ -11,9 +11,15 @@ http.createServer(function (req, res) {
     }, function (err) {
         res.end(err);
     });
+    
+    database.returnProduto("AMEN").then(function (result) {
+        res.end(JSON.stringify(result));
+    }, function (err) {
+        res.end(err);
+    });
     */
 
-    database.returnProduto("AMEN").then(function (result) {
+    database.returnLoja(1).then(function (result) {
         res.end(JSON.stringify(result));
     }, function (err) {
         res.end(err);
