@@ -69,7 +69,7 @@ module.exports = {
 
                 dbo.collection("lojas").findOne(
                     {
-                        "idLoja": idLoja
+                        "idLoja": parseInt(idLoja)
                     },
                     {
                         projection:
