@@ -1,12 +1,13 @@
 
 $(document).ready(function(){
+
 $("#btnPesquisarProduto").click(function () {
-    pesquisaProduto("PASTA");
+    pesquisaProduto($("#inputProduto").val());
 });
 
 function pesquisaProduto(nome) {
     jQuery.ajax({
-        url: "http://localhost:8080/produtos/?nomeProduto=" + nome,
+        url: "http://localhost:8080/produtos?nomeProduto=" + nome,
         method: "GET",
         success: function (data) {
             console.log(data);

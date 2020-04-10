@@ -6,33 +6,32 @@ http.createServer(function (req, res) {
     res.setHeader("Access-Control-Allow-Origin", "*"); //Aqui permite acesso de outro local
     res.writeHead(200, { 'Content-Type': 'text/html' });
 
-    console.log(req.url);   
-
      //Aqui os parâmetros da url são recuperados como objeto
-     var q = url.parse(req.url, true).query;
-     console.log(q);
+     var filter = url.parse(req.url, true).query;
+     console.log(filter);
 
-    /*
-    database.returnListaProdutoCategoria(1).then(function (result) {
-        res.end(JSON.stringify(result));
-    }, function (err) {
-        res.end(err);
-    });
-    */
-
-    database.returnProduto(q.nomeProduto).then(function (result) {
-        res.end(JSON.stringify(result));
-    }, function (err) {
-        res.end(err);
-    });
-   
-
-    /*    
-    database.returnLoja(1).then(function (result) {
-        res.end(JSON.stringify(result));
-    }, function (err) {
-        res.end(err);
-    });
-     */
+    switch (req.url.split("?")[0]){
+        case "/produtos":
+            database.returnProduto(filter.nomeProduto).then(function (result) {
+                res.end(JSON.stringify(result));
+            }, function (err) {
+                res.end(err);
+            });
+        break;
+        case "/lojas":
+            database.returnLoja(filter.idLoja).then(function (result) {
+                res.end(JSON.stringify(result));
+            }, function (err) {
+                res.end(err);
+            });
+        break;
+        case "/categorias":
+            database.returnListaProdutoCategoria(filter.idCategoria).then(function (result) {
+                res.end(JSON.stringify(result));
+            }, function (err) {
+                res.end(err);
+            });
+        break;
+    }
 
 }).listen(8080);

@@ -35,25 +35,25 @@ module.exports = {
 
                 var dbo = db.db("devAgregador");
 
-                dbo.collection("produtos").findOne(
+                dbo.collection("produtos").find(
                     {
-                    "nomeProduto": new RegExp(nome, "i")
+                        "nomeProduto": new RegExp(nome, "i")
                     },
                     {
-                    projection:
-                    {
-                        _id: 0
-                    }
-                    },
-                    function (err, result) {
-                        if (err) {
-                            reject(err)
-                        } else {
-                            db.close();
-                            console.log(JSON.stringify(result));
-                            resolve(result);
+                        projection:
+                        {
+                            _id: 0
                         }
-                    });
+                    }).toArray(
+                        function (err, result) {
+                            if (err) {
+                                reject(err)
+                            } else {
+                                db.close();
+                                console.log(JSON.stringify(result));
+                                resolve(result);
+                            }
+                        });
             });
 
         });
@@ -69,13 +69,13 @@ module.exports = {
 
                 dbo.collection("lojas").findOne(
                     {
-                    "idLoja": idLoja
+                        "idLoja": idLoja
                     },
                     {
-                    projection:
-                    {
-                        _id: 0
-                    }
+                        projection:
+                        {
+                            _id: 0
+                        }
                     },
                     function (err, result) {
                         if (err) {
