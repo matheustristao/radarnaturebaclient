@@ -8,12 +8,50 @@ $(document).ready(function () {
         var inputProduto = $("#inputProduto").val();
         arrayProdutos = [];
         arrayLojas = [];
+        $('#resultList').empty();
         pesquisaProduto(inputProduto);
     });
 
-    function atualizarLista(){
+    function atualizarLista() {
         console.log(arrayProdutos);
         console.log(arrayLojas);
+
+        var list = $('#resultList');
+
+        $.each(arrayProdutos, function (i) {
+            var li = $('<li/>');
+
+            li.addClass('list-group-item list-nome-produto');
+            li.text(arrayProdutos[i].nomeProduto);
+            li.appendTo(list);
+
+            var li = '';
+            var li = $('<li/>');
+
+            var lojas = arrayProdutos[i].lojas;
+
+            for (var i = 0; i < lojas.length; i++) {
+
+                var loja = lojas[i];
+
+                console.log(arrayLojas);
+
+                for (var j = 0; j < arrayLojas.length; j++) {
+
+                    if (arrayLojas[j].idLoja = loja.idLoja) {
+                        li.addClass('list-group-item ');
+                        li.text(arrayLojas[j].nomeLoja);
+                        li.appendTo(list);
+                    }
+
+                }
+
+            }
+
+
+
+        });
+
     }
 
     function pesquisaProduto(nome) {
