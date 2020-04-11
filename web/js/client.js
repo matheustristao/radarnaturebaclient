@@ -4,6 +4,8 @@ $(document).ready(function () {
     var arrayProdutos = new Array();
     var arrayLojas = new Array();
 
+    var endpointServer = "http://192.168.1.16:8080";
+
     $("#btnPesquisarProduto").click(function () {
         var inputProduto = $("#inputProduto").val();
         arrayProdutos = [];
@@ -28,9 +30,33 @@ $(document).ready(function () {
             var li = '';
 
             //Marca do produto
+            var marca;
+
+            if(arrayProdutos[i].marcaProduto === ''){
+                marca = "Não informado";
+            } else{
+                marca = arrayProdutos[i].marcaProduto;
+            }
+
             var li = $('<li/>');
             li.addClass('list-group-item');
-            li.text("Marca: " + arrayProdutos[i].marcaProduto);
+            li.text("Marca: " + marca);
+            li.appendTo(list);
+            var li = '';
+
+            //Glúten Free
+            var glutenFree;
+            if(arrayProdutos[i].glutenFree === "S"){
+                glutenFree = 'Sim';
+            }else if(arrayProdutos[i].glutenFree === "N"){
+                glutenFree = 'Não';
+            }else{
+                glutenFree = 'Não informado';
+            }
+
+            var li = $('<li/>');
+            li.addClass('list-group-item');
+            li.text("Glúten free? " + glutenFree);
             li.appendTo(list);
             var li = '';
 
@@ -69,7 +95,7 @@ $(document).ready(function () {
 
     function pesquisaProduto(nome) {
         jQuery.ajax({
-            url: "http://localhost:8080/produtos?nomeProduto=" + nome,
+            url: endpointServer + "/produtos?nomeProduto=" + nome,
             method: "GET",
             dataType: "json",
             success: function (response) {
@@ -115,7 +141,7 @@ $(document).ready(function () {
 
 
         jQuery.ajax({
-            url: "http://localhost:8080/lojas?idLoja=" + concatLojas,
+            url: endpointServer + "/lojas?idLoja=" + concatLojas,
             method: "GET",
             dataType: "json",
             success: function (responseLojas) {
