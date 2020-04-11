@@ -8,7 +8,7 @@ http.createServer(function (req, res) {
 
      //Aqui os parâmetros da url são recuperados como objeto
      var filter = url.parse(req.url, true).query;
-     console.log(filter);
+     //console.log(filter);
 
     switch (req.url.split("?")[0]){
         case "/produtos":

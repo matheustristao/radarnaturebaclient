@@ -59,7 +59,16 @@ module.exports = {
         });
     },
 
-    returnLoja: function (idLoja) {
+    returnLoja: function (arrayLoja) {
+
+        var transformedArrayLoja = new Array();
+
+        transformedArrayLoja = arrayLoja.split(",") ;
+
+        for(var i=0;i<transformedArrayLoja.length;i++){
+            transformedArrayLoja[i] = parseInt(transformedArrayLoja[i]);
+        }
+
         return new Promise(function (resolve, reject) {
 
             MongoClient.connect(url, function (err, db) {
@@ -67,25 +76,25 @@ module.exports = {
 
                 var dbo = db.db("devAgregador");
 
-                dbo.collection("lojas").findOne(
+                dbo.collection("lojas").find(
                     {
-                        "idLoja": parseInt(idLoja)
+                        "idLoja" : {"$in":transformedArrayLoja}
                     },
                     {
                         projection:
                         {
                             _id: 0
                         }
-                    },
-                    function (err, result) {
-                        if (err) {
-                            reject(err)
-                        } else {
-                            db.close();
-                            console.log(JSON.stringify(result));
-                            resolve(result);
-                        }
-                    });
+                    }).toArray(
+                        function (err, result) {
+                            if (err) {
+                                reject(err)
+                            } else {
+                                db.close();
+                                console.log(JSON.stringify(result));
+                                resolve(result);
+                            }
+                        });
             });
 
         });
