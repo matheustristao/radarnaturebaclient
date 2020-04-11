@@ -1,6 +1,7 @@
 
 $(document).ready(function () {
 
+    var produto;
     var arrayProdutos = new Array();
     var arrayLojas = new Array();
 
@@ -9,33 +10,57 @@ $(document).ready(function () {
     $("#btnPesquisarProduto").click(function () {
         var inputProduto = $("#inputProduto").val();
         arrayProdutos = [];
-        arrayLojas = [];
         $('#resultList').empty();
+        $('#produtoDetail').empty();
         pesquisaProduto(inputProduto);
     });
 
-    function atualizarLista() {
+    $("#resultList").click(function (event) {
+        console.log(event.target);
+        arrayLojas = [];
+        $('#resultList').empty();
+        $('#produtoDetail').empty();
+        pesquisaProdutoDetail(event.target.id);
+    });
+
+    function atualizarListaProdutos(){
         console.log(arrayProdutos);
-        console.log(arrayLojas);
 
         var list = $('#resultList');
 
         $.each(arrayProdutos, function (i) {
+            //Nome do produto
+            var btn = $('<a/>',{
+                id : arrayProdutos[i].idProduto,
+                class : 'list-group-item list-group-item-action btnProdutoDetail',
+                href: "#",
+                text : arrayProdutos[i].nomeProduto
+            });
+            btn.appendTo(list);
+            var btn = '';
+        });
+
+    }
+
+    function atualizarDetail() {
+        console.log(arrayLojas);
+
+        var list = $('#produtoDetail');
 
             //Nome do produto
             var li = $('<li/>');
             li.addClass('list-group-item list-nome-produto');
-            li.text(arrayProdutos[i].nomeProduto);
+            li.text(produto.nomeProduto);
             li.appendTo(list);
             var li = '';
 
             //Marca do produto
             var marca;
 
-            if(arrayProdutos[i].marcaProduto === ''){
+            if (produto.marcaProduto === '') {
                 marca = "Não informado";
-            } else{
-                marca = arrayProdutos[i].marcaProduto;
+            } else {
+                marca = produto.marcaProduto;
             }
 
             var li = $('<li/>');
@@ -46,11 +71,11 @@ $(document).ready(function () {
 
             //Glúten Free
             var glutenFree;
-            if(arrayProdutos[i].glutenFree === "S"){
+            if (produto.glutenFree === "S") {
                 glutenFree = 'Sim';
-            }else if(arrayProdutos[i].glutenFree === "N"){
+            } else if (produto.glutenFree === "N") {
                 glutenFree = 'Não';
-            }else{
+            } else {
                 glutenFree = 'Não informado';
             }
 
@@ -61,7 +86,7 @@ $(document).ready(function () {
             var li = '';
 
             //Lojas
-            var idLojas = arrayProdutos[i].lojas;
+            var idLojas = produto.lojas;
 
             for (var i = 0; i < idLojas.length; i++) {
                 var idLoja = idLojas[i];
@@ -84,13 +109,12 @@ $(document).ready(function () {
                     var endereco = lojaDetail.endereco[j];
                     var li = $('<li/>');
                     li.addClass('list-group-item ');
-                    li.text("Endereço " + j+1 + ": " + endereco.local);
+                    li.text("Endereço " + j + 1 + ": " + endereco.local);
                     li.appendTo(list);
                     var li = '';
                 }
 
             }
-        });
     }
 
     function pesquisaProduto(nome) {
@@ -105,21 +129,38 @@ $(document).ready(function () {
                 console.log(errorThrown);
             },
             complete: function () {
+                atualizarListaProdutos();
+            }
+        });
+    }
+
+    function pesquisaProdutoDetail(idProduto) {
+
+        jQuery.ajax({
+            url: endpointServer + "/produtoDetail?idProduto=" + idProduto,
+            method: "GET",
+            dataType: "json",
+            success: function (response) {
+                produto = response;
+            },
+            error: function (textStatus, errorThrown) {
+                console.log(errorThrown);
+            },
+            complete: function () {
 
                 var arrayIdLojas = new Array();
 
-                for (var i = 0; i < arrayProdutos.length; i++) {
-                    var objectProduto = arrayProdutos[i];
-                    for (var k = 0; k < objectProduto.lojas.length; k++) {
-                        var objectLoja = objectProduto.lojas[k];
-                        if (arrayIdLojas.includes(objectLoja.idLoja) === false) {
-                            arrayIdLojas.push(objectLoja.idLoja);
-                        }
+                for (var k = 0; k < produto.lojas.length; k++) {
+                    var objectLoja = produto.lojas[k];
+                    if (arrayIdLojas.includes(objectLoja.idLoja) === false) {
+                        arrayIdLojas.push(objectLoja.idLoja);
                     }
                 }
+
                 pesquisaLoja(arrayIdLojas);
             }
         });
+
     }
 
     function pesquisaLoja(arrayIdLojas) {
@@ -151,7 +192,7 @@ $(document).ready(function () {
                 console.log(errorThrown);
             },
             complete: function () {
-                atualizarLista();
+                atualizarDetail();
             }
         });
     }

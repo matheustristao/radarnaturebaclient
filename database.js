@@ -27,7 +27,7 @@ module.exports = {
         });
     },
 
-    returnProduto: function (nome) {
+    returnListaProdutos: function (nome) {
         return new Promise(function (resolve, reject) {
 
             MongoClient.connect(url, function (err, db) {
@@ -59,13 +59,45 @@ module.exports = {
         });
     },
 
+    returnProdutoDetail: function (idProduto) {
+        return new Promise(function (resolve, reject) {
+
+            MongoClient.connect(url, function (err, db) {
+                if (err) reject(err);
+
+                var dbo = db.db("devAgregador");
+
+                dbo.collection("produtos").findOne(
+                    {
+                        "idProduto": parseInt(idProduto)
+                    },
+                    {
+                        projection:
+                        {
+                            _id: 0
+                        }
+                    },
+                    function (err, result) {
+                        if (err) {
+                            reject(err)
+                        } else {
+                            db.close();
+                            console.log(JSON.stringify(result));
+                            resolve(result);
+                        }
+                    });
+            });
+
+        });
+    },
+
     returnLoja: function (arrayLoja) {
 
         var transformedArrayLoja = new Array();
 
-        transformedArrayLoja = arrayLoja.split(",") ;
+        transformedArrayLoja = arrayLoja.split(",");
 
-        for(var i=0;i<transformedArrayLoja.length;i++){
+        for (var i = 0; i < transformedArrayLoja.length; i++) {
             transformedArrayLoja[i] = parseInt(transformedArrayLoja[i]);
         }
 
@@ -78,7 +110,7 @@ module.exports = {
 
                 dbo.collection("lojas").find(
                     {
-                        "idLoja" : {"$in":transformedArrayLoja}
+                        "idLoja": { "$in": transformedArrayLoja }
                     },
                     {
                         projection:

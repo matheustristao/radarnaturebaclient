@@ -12,7 +12,14 @@ http.createServer(function (req, res) {
 
     switch (req.url.split("?")[0]){
         case "/produtos":
-            database.returnProduto(filter.nomeProduto).then(function (result) {
+            database.returnListaProdutos(filter.nomeProduto).then(function (result) {
+                res.end(JSON.stringify(result));
+            }, function (err) {
+                res.end(err);
+            });
+        break;
+        case "/produtoDetail":
+            database.returnProdutoDetail(filter.idProduto).then(function (result) {
                 res.end(JSON.stringify(result));
             }, function (err) {
                 res.end(err);
