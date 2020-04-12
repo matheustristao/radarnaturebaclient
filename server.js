@@ -23,11 +23,13 @@ app.use(function (request, response, next) {
 });
 
 app.get('/', function (req, res) {
+    res.status(202);
     res.send("API running...");
 });
 
 app.get('/produtos', function (req, res) {
     database.returnListaProdutos(req.query.nomeProduto).then(function (result) {
+        res.status(202);
         res.end(JSON.stringify(result));
     }, function (err) {
         res.end(err);
@@ -36,6 +38,7 @@ app.get('/produtos', function (req, res) {
 
 app.get('/produtoDetail', function (req, res) {
     database.returnProdutoDetail(req.query.idProduto).then(function (result) {
+        res.status(202);
         res.end(JSON.stringify(result));
     }, function (err) {
         res.end(err);
@@ -44,6 +47,7 @@ app.get('/produtoDetail', function (req, res) {
 
 app.get('/lojas', function (req, res) {
     database.returnLoja(req.query.idLoja).then(function (result) {
+        res.status(202);
         res.end(JSON.stringify(result));
     }, function (err) {
         res.end(err);
@@ -52,6 +56,7 @@ app.get('/lojas', function (req, res) {
 
 app.get('/categorias', function (req, res) {
     database.returnListaProdutoCategoria(req.query.idCategoria).then(function (result) {
+        res.status(202);
         res.end(JSON.stringify(result));
     }, function (err) {
         res.end(err);

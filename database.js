@@ -1,5 +1,12 @@
 var MongoClient = require('mongodb').MongoClient;
-var url = "mongodb://localhost:27017/devAgregador";
+var config = require('config');
+'use strict';
+
+var server = config.get('database.server');
+var port = config.get('database.port');
+var database = config.get('database.database');
+
+var url = "mongodb://" + server + ":" + port + "/" + database;
 
 module.exports = {
 
@@ -9,7 +16,7 @@ module.exports = {
             MongoClient.connect(url, function (err, db) {
                 if (err) reject(err);
 
-                var dbo = db.db("devAgregador");
+                var dbo = db.db(database);
 
                 dbo.collection("produtos").find({ "idCategoria": idCategoria }).toArray(function (err, result) {
                     if (err) {
@@ -33,7 +40,7 @@ module.exports = {
             MongoClient.connect(url, function (err, db) {
                 if (err) reject(err);
 
-                var dbo = db.db("devAgregador");
+                var dbo = db.db(database);
 
                 dbo.collection("produtos").find(
                     {
@@ -65,7 +72,7 @@ module.exports = {
             MongoClient.connect(url, function (err, db) {
                 if (err) reject(err);
 
-                var dbo = db.db("devAgregador");
+                var dbo = db.db(database);
 
                 dbo.collection("produtos").findOne(
                     {
@@ -106,7 +113,7 @@ module.exports = {
             MongoClient.connect(url, function (err, db) {
                 if (err) reject(err);
 
-                var dbo = db.db("devAgregador");
+                var dbo = db.db(database);
 
                 dbo.collection("lojas").find(
                     {
