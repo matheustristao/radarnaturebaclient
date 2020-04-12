@@ -1,0 +1,24 @@
+{
+  "name": "agregador",
+  "version": "1.0.0",
+  "description": "agregador de produtos naturais",
+  "main": "server.js",
+  "dependencies": {
+    "mongodb": "^3.5.5"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/matheustristao/agregador.git"
+  },
+  "author": "matheus oliveira tristao dos anjos",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/matheustristao/agregador/issues"
+  },
+  "homepage": "https://github.com/matheustristao/agregador#readme"
+}
