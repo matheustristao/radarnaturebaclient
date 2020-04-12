@@ -1,44 +1,65 @@
-var http = require('http');
-var url = require('url');
-var database = require('./database'); //Aqui eu carrego meu module database
+var express = require('express'),
+    app = express(),
+    database = require('./database'); //Aqui eu carrego meu module database
+    bodyParser = require("body-parser");
 
-http.createServer(function (req, res) {
-    res.setHeader("Access-Control-Allow-Origin", "*"); //Aqui permite acesso de outro local
-    res.writeHead(200, { 'Content-Type': 'text/html' });
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
-     //Aqui os parâmetros da url são recuperados como objeto
-     var filter = url.parse(req.url, true).query;
-     //console.log(filter);
 
-    switch (req.url.split("?")[0]){
-        case "/produtos":
-            database.returnListaProdutos(filter.nomeProduto).then(function (result) {
-                res.end(JSON.stringify(result));
-            }, function (err) {
-                res.end(err);
-            });
-        break;
-        case "/produtoDetail":
-            database.returnProdutoDetail(filter.idProduto).then(function (result) {
-                res.end(JSON.stringify(result));
-            }, function (err) {
-                res.end(err);
-            });
-        break;
-        case "/lojas":
-            database.returnLoja(filter.idLoja).then(function (result) {
-                res.end(JSON.stringify(result));
-            }, function (err) {
-                res.end(err);
-            });
-        break;
-        case "/categorias":
-            database.returnListaProdutoCategoria(filter.idCategoria).then(function (result) {
-                res.end(JSON.stringify(result));
-            }, function (err) {
-                res.end(err);
-            });
-        break;
+app.use(function (request, response, next) {
+    if (request.url === '/favicon.ico') {
+        response.writeHead(200, { 'Content-Type': 'image/x-icon' });
+        response.end('');
+    } else {
+        next();
     }
+});
 
-}).listen(8080);
+app.use(function (request, response, next) {
+    response.header("Access-Control-Allow-Origin", "*");
+    response.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
+
+app.get('/', function (req, res) {
+    res.send("API running...");
+});
+
+app.get('/produtos', function (req, res) {
+    database.returnListaProdutos(req.query.nomeProduto).then(function (result) {
+        res.end(JSON.stringify(result));
+    }, function (err) {
+        res.end(err);
+    });
+});
+
+app.get('/produtoDetail', function (req, res) {
+    database.returnProdutoDetail(req.query.idProduto).then(function (result) {
+        res.end(JSON.stringify(result));
+    }, function (err) {
+        res.end(err);
+    });
+});
+
+app.get('/lojas', function (req, res) {
+    database.returnLoja(req.query.idLoja).then(function (result) {
+        res.end(JSON.stringify(result));
+    }, function (err) {
+        res.end(err);
+    });
+});
+
+app.get('/categorias', function (req, res) {
+    database.returnListaProdutoCategoria(req.query.idCategoria).then(function (result) {
+        res.end(JSON.stringify(result));
+    }, function (err) {
+        res.end(err);
+    });
+});
+
+var server = app.listen(8080, function () {
+    var host = server.address().address;
+    var port = server.address().port;
+    console.log("http://%s:%s", host, port);
+});
