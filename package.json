@@ -9,9 +9,14 @@
     "express": "^4.17.1",
     "mongodb": "^3.5.5"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "concurrently": "^5.1.0",
+    "nodemon": "^2.0.3"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "client": "npm run start --prefix client",
+    "dev": "concurrently --kill-others-on-fail \"npm run nodemon\" \"npm run client\"",
     "start": "node server.js",
     "nodemon": "nodemon server.js"
   },

@@ -3,5 +3,8 @@
         "server":"localhost",
         "port": "27017",
         "database" : "devAgregador"
+    },
+    "nodejs":{
+        "port":"5000"
     }
 }

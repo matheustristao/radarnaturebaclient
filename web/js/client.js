@@ -5,7 +5,7 @@ $(document).ready(function () {
     var arrayProdutos = new Array();
     var arrayLojas = new Array();
 
-    var endpointServer = "http://192.168.1.16:8080";
+    var endpointServer = "http://localhost:5000";
 
     $("#btnPesquisarProduto").click(function () {
         var inputProduto = $("#inputProduto").val();
