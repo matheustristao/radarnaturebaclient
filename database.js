@@ -1,12 +1,11 @@
-var MongoClient = require('mongodb').MongoClient;
-var config = require('config');
+const MongoClient = require('mongodb').MongoClient,
+      config = require('config');
 'use strict';
 
-var server = config.get('database.server');
-var port = config.get('database.port');
-var database = config.get('database.database');
-
-var url = "mongodb://" + server + ":" + port + "/" + database;
+const server = config.get('database.server'),
+    port = config.get('database.port'),
+    database = config.get('database.database'),
+    url = "mongodb://" + server + ":" + port + "/" + database;
 
 module.exports = {
 

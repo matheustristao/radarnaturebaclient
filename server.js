@@ -1,7 +1,8 @@
-var express = require('express'),
-    app = express(),
-    database = require('./database'); //Aqui eu carrego meu module database
-    bodyParser = require("body-parser");
+const express = require('express'),
+      database = require('./database'); //Aqui eu carrego meu module database
+      bodyParser = require("body-parser");
+
+var app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

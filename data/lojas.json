@@ -1,0 +1,28 @@
+[
+    {
+        "idLoja": 1,
+        "nomeLoja": "FEEL LIFE",
+        "endereco": [
+            {
+                "local": "R. Antônio Lapa, 871 - Cambuí, Campinas - SP, 13025-241",
+                "telefone": "(19) 3307-0007"
+            }
+        ],
+        "enderecosVirtuais": [
+            { "facebook": "https://www.facebook.com/feellife.oficial" }
+        ]
+    },
+    {
+        "idLoja": 2,
+        "nomeLoja": "MUNDO VERDE",
+        "endereco": [
+            {
+                "local": "Shopping Parque Dom Pedro",
+                "telefone": "(19) 3756-9503"
+            }
+        ],
+        "enderecosVirtuais": [
+            { "website": "https://www.mundoverde.com.br/" }
+        ]
+    }
+]

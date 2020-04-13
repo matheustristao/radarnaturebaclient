@@ -1,0 +1,22 @@
+[
+    {
+        "idProduto": 1,
+        "idCategoria": 1,
+        "nomeProduto": "PASTA DE AMENDOIM",
+        "marcaProduto": "POWER ONE",
+        "glutenFree": "S",
+        "lojas": [
+            { "idLoja": 1 },
+            { "idLoja": 2 }
+        ]
+    },
+    {
+        "idProduto": 2,
+        "idCategoria": 1,
+        "nomeProduto": "CASTANHA DO PARA",
+        "marcaProduto": "",
+        "glutenFree": "S",
+        "lojas": [
+            { "idLoja": 1 }
+        ]
+    }]
