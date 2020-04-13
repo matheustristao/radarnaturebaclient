@@ -22,21 +22,21 @@ function App() {
       </header>
       */}
       
-      <div class="jumbotron text-center">
+      <div className="jumbotron text-center">
         <h1>Cadê meu produto natureba?</h1>
         <p>A gente encontra pra você</p>
       </div>
 
-      <div class="container">
-        <div class="row">
-          <div class="col-sm-6">
+      <div className="container">
+        <div className="row">
+          <div className="col-sm-6">
             <h3>Procure por produto</h3>
-            <div class="form-inline">
-              <div class="input-group">
-                <input type="text" size="30" placeholder="Ex: PASTA DE AMENDOÍM" class="form-control"
+            <div className="form-inline">
+              <div className="input-group">
+                <input type="text" size="30" placeholder="Ex: PASTA DE AMENDOÍM" className="form-control"
                   id="inputProduto" />
-                <div class="input-group-btn">
-                  <button id="btnPesquisarProduto" type="button" class="btn btn-default btnsearch">
+                <div className="input-group-btn">
+                  <button id="btnPesquisarProduto" type="button" className="btn btn-default btnsearch">
                     Pesquisar
                         </button>
                 </div>
@@ -45,24 +45,24 @@ function App() {
 
           </div>
         </div>
-        <div class="row">
-          <div class="col-sm-6">
-            <div id="resultList" class="list-group"></div>
+        <div className="row">
+          <div className="col-sm-6">
+            <div id="resultList" className="list-group"></div>
           </div>
         </div>
-        <div id="resultDetail" class="row">
-          <div class="col-sm-6">
-            <ul id="produtoDetail" class="list-group"></ul>
+        <div id="resultDetail" className="row">
+          <div className="col-sm-6">
+            <ul id="produtoDetail" className="list-group"></ul>
           </div>
         </div>
 
       </div>
 
-      <footer class="text-center">
+      <footer className="text-center">
         <p>Não nos responsailizamos pelo estoque dos estabelecimentos</p>
         <p>Desenvolvido por Cesar&Tristão</p>
-        <ul class="list-group">
-          <li><a href="#contact"> Entre em contato <span class="glyphicon glyphicon-send"></span></a></li>
+        <ul className="list-group">
+          <li><a href="#contact"> Entre em contato <span className="glyphicon glyphicon-send"></span></a></li>
         </ul>
       </footer>
     </div>
