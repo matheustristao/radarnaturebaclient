@@ -8,7 +8,8 @@ class App extends React.Component {
     this.state = {
       endpointServer: "http://192.168.1.16:5000",
       inputproduto: '',
-      isLoaded: false,
+      showResults: false,
+      showDetail: false,
       produto: '',
       arrayProdutos: [],
       arrayLojas: []
@@ -25,26 +26,31 @@ class App extends React.Component {
       .then(
         (result) => {
           this.setState({
-            isLoaded: true,
-            arrayProdutos: result
+            arrayProdutos: result,
+            showResults: true,
+            showDetail: false
           });
           console.log(this.state.arrayProdutos);
         },
         (error) => {
           this.setState({
-            isLoaded: true
+            showResults: true,
+            showDetail: false
           });
           console.log(error);
         }
       )
   }
   pesquisaProdutoDetail = (event) => {
-
     fetch(this.state.endpointServer + "/produtoDetail?idProduto=" + event.target.id)
       .then(res => res.json())
       .then(
         (result) => {
-          this.setState({ produto: result });
+          this.setState({
+            showResults: false,
+            showDetail: true,
+            produto: result
+          });
           let arrayIdLojas = [],
             concatLojas;
 
@@ -73,14 +79,10 @@ class App extends React.Component {
               (result) => {
                 console.log(result);
                 this.setState({
-                  isLoaded: true,
                   arrayLojas: result
                 });
               },
               (error) => {
-                this.setState({
-                  isLoaded: true
-                });
                 console.log(error);
               }
             )
@@ -88,7 +90,7 @@ class App extends React.Component {
         },
         (error) => {
           this.setState({
-            isLoaded: true
+            showResults: true
           });
           console.log(error);
         }
@@ -121,35 +123,55 @@ class App extends React.Component {
           </div>
           <div className="row">
             <div className="col-sm-6">
-              <div id="resultList" onClick={this.pesquisaProdutoDetail} className="list-group">
-                <div>
-                  {this.state.arrayProdutos.map(function (d, idx) {
-                    return (<a className="list-group-item list-group-item-action btnProdutoDetail"
-                      id={d.idProduto}
-                      href="#"
-                      key={idx}>
-                      {d.nomeProduto}
-                    </a>)
-                  })}
+              {
+                this.state.showResults &&
+                <div id="resultList" onClick={this.pesquisaProdutoDetail} className="list-group">
+                  {
+                    this.state.arrayProdutos.map(function (d, idx) {
+                      return (
+                        <a className="list-group-item list-group-item-action btnProdutoDetail"
+                          id={d.idProduto}
+                          href="#"
+                          key={idx}>
+                          Nome: {d.nomeProduto} - Marca {d.marcaProduto}
+                        </a>
+                      )
+                    })
+                  }
                 </div>
-              </div>
+              }
             </div>
           </div>
           <div id="resultDetail" className="row">
-            <div className="col-sm-6">
-              <p>Nome: {this.state.produto.nomeProduto}</p>
-              <p>Marca: {this.state.produto.marcaProduto}</p>
-              <div id="produtoDetail" className="list-group">
-                {this.state.arrayLojas.map(function (d, idx) {
-                  return (<a className="list-group-item list-group-item-action btnProdutoDetail"
-                    id={d.idLoja}
-                    href="#"
-                    key={idx}>
-                    {d.nomeLoja}
-                  </a>)
-                })}
+            {
+              this.state.showDetail &&
+              <div className="col-sm-6">
+
+                <p>Nome: {this.state.produto.nomeProduto}</p>
+                <p>Marca: {this.state.produto.marcaProduto}</p>
+                <p>Gluten Free? {this.state.produto.glutenFree}</p>
+                <ul id="produtoDetail" className="list-group">
+                  {this.state.arrayLojas.map(function (d, idx) {
+                    return (
+                      <li id={d.idLoja} className="list-group-item btnProdutoDetail" key={idx}>
+                        {d.nomeLoja}
+                        <ul>
+                          {d.endereco.map(function (d, idx) {
+                            return (
+                              <li className="list-group-item btnProdutoDetail" key={idx}>
+                                Endereço {idx + 1} - {d.local}
+                              </li>
+                            )
+                          })
+                          }
+                        </ul>
+                      </li>
+                    )
+                  })
+                  }
+                </ul>
               </div>
-            </div>
+            }
           </div>
         </div>
         <footer className="text-center">
