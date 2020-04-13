@@ -46,7 +46,7 @@ class App extends React.Component {
         (result) => {
           this.setState({ produto: result });
           let arrayIdLojas = [],
-              concatLojas;
+            concatLojas;
 
           for (var k = 0; k < this.state.produto.lojas.length; k++) {
             var objectLoja = this.state.produto.lojas[k];
@@ -137,9 +137,18 @@ class App extends React.Component {
           </div>
           <div id="resultDetail" className="row">
             <div className="col-sm-6">
-                <p>Nome: {this.state.produto.nomeProduto}</p>
-                <p>Marca: {this.state.produto.marcaProduto}</p>
-              <ul id="produtoDetail" className="list-group"></ul>
+              <p>Nome: {this.state.produto.nomeProduto}</p>
+              <p>Marca: {this.state.produto.marcaProduto}</p>
+              <div id="produtoDetail" className="list-group">
+                {this.state.arrayLojas.map(function (d, idx) {
+                  return (<a className="list-group-item list-group-item-action btnProdutoDetail"
+                    id={d.idLoja}
+                    href="#"
+                    key={idx}>
+                    {d.nomeLoja}
+                  </a>)
+                })}
+              </div>
             </div>
           </div>
         </div>
