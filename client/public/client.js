@@ -8,11 +8,13 @@ $(document).ready(function () {
     var endpointServer = "http://localhost:5000";
 
     $("#btnPesquisarProduto").click(function () {
+        /*
         var inputProduto = $("#inputProduto").val();
         arrayProdutos = [];
         $('#resultList').empty();
         $('#produtoDetail').empty();
         pesquisaProduto(inputProduto);
+        */
     });
 
     $("#resultList").click(function (event) {
