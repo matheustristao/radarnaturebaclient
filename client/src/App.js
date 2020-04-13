@@ -64,11 +64,9 @@ class App extends React.Component {
           for (var j = 0; j < arrayIdLojas.length; j++) {
             if (j === 0) {
               concatLojas = arrayIdLojas[j] + ',';
-            }
-            else if (j === arrayIdLojas.length - 1) {
+            } else if (j === arrayIdLojas.length - 1) {
               concatLojas = concatLojas + arrayIdLojas[j];
-            }
-            else {
+            }else {
               concatLojas = concatLojas + arrayIdLojas[j] + ',';
             }
           }
@@ -86,7 +84,6 @@ class App extends React.Component {
                 console.log(error);
               }
             )
-
         },
         (error) => {
           this.setState({
@@ -161,13 +158,11 @@ class App extends React.Component {
                               <li className="list-group-item btnProdutoDetail" key={idx}>
                                 Endereço {idx + 1} - {d.local}
                               </li>
-                            )
-                          })
+                            )})
                           }
                         </ul>
                       </li>
-                    )
-                  })
+                    )})
                   }
                 </ul>
               </div>
