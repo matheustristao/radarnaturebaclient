@@ -7,42 +7,6 @@ $(document).ready(function () {
 
     var endpointServer = "http://localhost:5000";
 
-    $("#btnPesquisarProduto").click(function () {
-        /*
-        var inputProduto = $("#inputProduto").val();
-        arrayProdutos = [];
-        $('#resultList').empty();
-        $('#produtoDetail').empty();
-        pesquisaProduto(inputProduto);
-        */
-    });
-
-    $("#resultList").click(function (event) {
-        console.log(event.target);
-        arrayLojas = [];
-        $('#resultList').empty();
-        $('#produtoDetail').empty();
-        pesquisaProdutoDetail(event.target.id);
-    });
-
-    function atualizarListaProdutos(){
-        console.log(arrayProdutos);
-
-        var list = $('#resultList');
-
-        $.each(arrayProdutos, function (i) {
-            //Nome do produto
-            var btn = $('<a/>',{
-                id : arrayProdutos[i].idProduto,
-                class : 'list-group-item list-group-item-action btnProdutoDetail',
-                href: "#",
-                text : arrayProdutos[i].nomeProduto
-            });
-            btn.appendTo(list);
-            var btn = '';
-        });
-
-    }
 
     function atualizarDetail() {
         console.log(arrayLojas);
@@ -117,86 +81,6 @@ $(document).ready(function () {
                 }
 
             }
-    }
-
-    function pesquisaProduto(nome) {
-        jQuery.ajax({
-            url: endpointServer + "/produtos?nomeProduto=" + nome,
-            method: "GET",
-            dataType: "json",
-            success: function (response) {
-                arrayProdutos = response;
-            },
-            error: function (textStatus, errorThrown) {
-                console.log(errorThrown);
-            },
-            complete: function () {
-                atualizarListaProdutos();
-            }
-        });
-    }
-
-    function pesquisaProdutoDetail(idProduto) {
-
-        jQuery.ajax({
-            url: endpointServer + "/produtoDetail?idProduto=" + idProduto,
-            method: "GET",
-            dataType: "json",
-            success: function (response) {
-                produto = response;
-            },
-            error: function (textStatus, errorThrown) {
-                console.log(errorThrown);
-            },
-            complete: function () {
-
-                var arrayIdLojas = new Array();
-
-                for (var k = 0; k < produto.lojas.length; k++) {
-                    var objectLoja = produto.lojas[k];
-                    if (arrayIdLojas.includes(objectLoja.idLoja) === false) {
-                        arrayIdLojas.push(objectLoja.idLoja);
-                    }
-                }
-
-                pesquisaLoja(arrayIdLojas);
-            }
-        });
-
-    }
-
-    function pesquisaLoja(arrayIdLojas) {
-
-        var concatLojas;
-
-        for (var j = 0; j < arrayIdLojas.length; j++) {
-
-            if (j === 0) {
-                concatLojas = arrayIdLojas[j] + ',';
-            }
-            else if (j === arrayIdLojas.length - 1) {
-                concatLojas = concatLojas + arrayIdLojas[j];
-            }
-            else {
-                concatLojas = concatLojas + arrayIdLojas[j] + ',';
-            }
-        }
-
-
-        jQuery.ajax({
-            url: endpointServer + "/lojas?idLoja=" + concatLojas,
-            method: "GET",
-            dataType: "json",
-            success: function (responseLojas) {
-                arrayLojas = responseLojas;
-            },
-            error: function (textStatus, errorThrown) {
-                console.log(errorThrown);
-            },
-            complete: function () {
-                atualizarDetail();
-            }
-        });
     }
 
 });

@@ -6,12 +6,11 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      endpointServer : "http://localhost:5000",
+      endpointServer: "http://localhost:5000",
       inputproduto: '',
       isLoaded: false,
       arrayProdutos: []
     };
-
 
     this.handleChange = this.handleChange.bind(this);
   }
@@ -27,7 +26,7 @@ class App extends React.Component {
             isLoaded: true,
             arrayProdutos: result
           });
-          console.log(result);
+          console.log(this.state.arrayProdutos);
         },
         (error) => {
           this.setState({
@@ -36,24 +35,58 @@ class App extends React.Component {
           console.log(error);
         }
       )
-    /*
-      jQuery.ajax({
-          url: endpointServer + "/produtos?nomeProduto=" + this.state.inputproduto,
-          method: "GET",
-          dataType: "json",
-          success: function (response) {
-              arrayProdutos = response;
-              console.log(response);
-          },
-          error: function (textStatus, errorThrown) {
-              console.log(errorThrown);
-          },
-          complete: function () {
-              atualizarListaProdutos();
-          }
-      });
-      */
+  }
+  pesquisaProdutoDetail = (event) => {
 
+    fetch(this.state.endpointServer + "/produtoDetail?idProduto=" + event.target.id)
+      .then(res => res.json())
+      .then(
+        (result) => {
+          let produto = result,
+            arrayIdLojas = [],
+            concatLojas;
+
+          for (var k = 0; k < produto.lojas.length; k++) {
+            var objectLoja = produto.lojas[k];
+            if (arrayIdLojas.includes(objectLoja.idLoja) === false) {
+              arrayIdLojas.push(objectLoja.idLoja);
+            }
+          }
+
+          for (var j = 0; j < arrayIdLojas.length; j++) {
+            if (j === 0) {
+              concatLojas = arrayIdLojas[j] + ',';
+            }
+            else if (j === arrayIdLojas.length - 1) {
+              concatLojas = concatLojas + arrayIdLojas[j];
+            }
+            else {
+              concatLojas = concatLojas + arrayIdLojas[j] + ',';
+            }
+          }
+
+          fetch(this.state.endpointServer + "/lojas?idLoja=" + concatLojas)
+            .then(res => res.json())
+            .then(
+              (result) => {
+                console.log(result);
+              },
+              (error) => {
+                this.setState({
+                  isLoaded: true
+                });
+                console.log(error);
+              }
+            )
+
+        },
+        (error) => {
+          this.setState({
+            isLoaded: true
+          });
+          console.log(error);
+        }
+      )
   }
   render() {
     return (
@@ -94,12 +127,22 @@ class App extends React.Component {
                   </div>
                 </div>
               </div>
-
             </div>
           </div>
           <div className="row">
             <div className="col-sm-6">
-              <div id="resultList" className="list-group"></div>
+              <div id="resultList" onClick={this.pesquisaProdutoDetail} className="list-group">
+                <div>
+                  {this.state.arrayProdutos.map(function (d, idx) {
+                    return (<a className="list-group-item list-group-item-action btnProdutoDetail"
+                      id={d.idProduto}
+                      href="#"
+                      key={idx}>
+                      {d.nomeProduto}
+                    </a>)
+                  })}
+                </div>
+              </div>
             </div>
           </div>
           <div id="resultDetail" className="row">
