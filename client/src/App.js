@@ -152,7 +152,6 @@ class App extends React.Component {
             </div>
           </div>
         </div>
-
         <footer className="text-center">
           <p>Não nos responsailizamos pelo estoque dos estabelecimentos</p>
           <p>Desenvolvido por Cesar&Tristão</p>
