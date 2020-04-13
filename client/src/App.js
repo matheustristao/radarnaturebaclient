@@ -6,10 +6,12 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      endpointServer: "http://localhost:5000",
+      endpointServer: "http://192.168.1.16:5000",
       inputproduto: '',
       isLoaded: false,
-      arrayProdutos: []
+      produto: '',
+      arrayProdutos: [],
+      arrayLojas: []
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -42,12 +44,12 @@ class App extends React.Component {
       .then(res => res.json())
       .then(
         (result) => {
-          let produto = result,
-            arrayIdLojas = [],
-            concatLojas;
+          this.setState({ produto: result });
+          let arrayIdLojas = [],
+              concatLojas;
 
-          for (var k = 0; k < produto.lojas.length; k++) {
-            var objectLoja = produto.lojas[k];
+          for (var k = 0; k < this.state.produto.lojas.length; k++) {
+            var objectLoja = this.state.produto.lojas[k];
             if (arrayIdLojas.includes(objectLoja.idLoja) === false) {
               arrayIdLojas.push(objectLoja.idLoja);
             }
@@ -70,6 +72,10 @@ class App extends React.Component {
             .then(
               (result) => {
                 console.log(result);
+                this.setState({
+                  isLoaded: true,
+                  arrayLojas: result
+                });
               },
               (error) => {
                 this.setState({
@@ -91,22 +97,6 @@ class App extends React.Component {
   render() {
     return (
       <div className="">
-        {/*  
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-        */}
 
         <div className="jumbotron text-center">
           <h1>Cadê meu produto natureba?</h1>
@@ -147,10 +137,11 @@ class App extends React.Component {
           </div>
           <div id="resultDetail" className="row">
             <div className="col-sm-6">
+                <p>Nome: {this.state.produto.nomeProduto}</p>
+                <p>Marca: {this.state.produto.marcaProduto}</p>
               <ul id="produtoDetail" className="list-group"></ul>
             </div>
           </div>
-
         </div>
 
         <footer className="text-center">
