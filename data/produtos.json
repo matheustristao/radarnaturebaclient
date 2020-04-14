@@ -17,6 +17,7 @@
         "marcaProduto": "",
         "glutenFree": "S",
         "lojas": [
-            { "idLoja": 1 }
+            { "idLoja": 1 },
+			{ "idLoja": 3 }
         ]
     }]

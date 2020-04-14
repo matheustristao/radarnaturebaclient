@@ -24,5 +24,18 @@
         "enderecosVirtuais": [
             { "website": "https://www.mundoverde.com.br/" }
         ]
+    },
+	{
+        "idLoja": 3,
+        "nomeLoja": "MONATI",
+        "endereco": [
+            {
+                "local": "Av Independencia, 5600 - lojas 1 e 2 - Centro, Vinhedo - SP, 13280-000",
+                "telefone": "(19) 99988-8442"
+            }
+        ],
+        "enderecosVirtuais": [
+            { "website": "https://www.instagram.com/monatialimentos/" }
+        ]
     }
 ]
