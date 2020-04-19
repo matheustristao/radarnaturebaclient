@@ -40,7 +40,7 @@ class App extends React.Component {
         return param;
     }
   }
-  procuraProduto = (event) => {
+  procuraProduto = () => {
     fetch(this.state.endpointServer + "/produtos?nomeProduto=" + this.state.inputproduto)
       .then(res => res.json())
       .then(
@@ -123,7 +123,7 @@ class App extends React.Component {
     return (
       <div className="">
 
-        <div className="jumbotron text-center">
+        <header className="jumbotron text-center">
           <h1>Cadê meu produto natureba?</h1>
           <h4>A gente encontra pra você</h4>
           <div className="form-inline formJumbo">
@@ -136,12 +136,11 @@ class App extends React.Component {
               </div>
             </div>
           </div>
-        </div>
+        </header>
 
         {
           this.state.showResults &&
           <div id="showResultsDiv" className="container-fluid text-center">
-
             <div className="row text-center">
               <h2>Resultado da busca</h2>
               <div id="resultList" onClick={this.pesquisaProdutoDetail} className="list-group">
