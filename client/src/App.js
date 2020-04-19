@@ -43,8 +43,6 @@ class App extends React.Component {
   }
   pesquisaProdutoDetail = (event) => {
 
-    console.log(event.target);
-
     fetch(this.state.endpointServer + "/produtoDetail?idProduto=" + event.target.id)
       .then(res => res.json())
       .then(
@@ -103,7 +101,7 @@ class App extends React.Component {
         <div className="jumbotron text-center">
           <h1>Cadê meu produto natureba?</h1>
           <p>A gente encontra pra você</p>
-          <div className="form-inline">
+          <div className="form-inline formJumbo">
             <div className="input-group">
               <input id="inputProduto" className="form-control" size="40" type="text" value={this.state.inputproduto} onChange={this.handleChange} placeholder="Ex: PASTA DE AMENDOÍM" />
               <div className="input-group-btn">
@@ -124,11 +122,10 @@ class App extends React.Component {
                 {
                   this.state.arrayProdutos.map(function (d, idx) {
                     return (
-                      <div className="col-sm-3 resultList">
+                      <div className="col-sm-3 resultList" key = {idx}>
                         <a className="list-group-item list-group-item-action btnProdutoDetail"
                           id={d.idProduto}
-                          href="#"
-                          key={idx}>
+                          href="#">
                           Nome: {d.nomeProduto}
                           <br></br>
                           Marca: {d.marcaProduto}
@@ -155,8 +152,8 @@ class App extends React.Component {
 
                 {this.state.arrayLojas.map(function (d, idx) {
                   return (
-                    <ul id="produtoDetail" className="list-group">
-                      <li id={d.idLoja} className="list-group-item btnProdutoDetail" key={idx}>
+                    <ul id="produtoDetail" className="list-group" key={idx}>
+                      <li id={d.idLoja} className="list-group-item btnProdutoDetail">
                         <p>{d.nomeLoja}</p>
                         <p><span>Facebook:</span> <a href={d.enderecosVirtuais.facebook} target="_blank"> {d.enderecosVirtuais.facebook} </a></p>
                         <p><span>Instagram:</span> <a href={d.enderecosVirtuais.instagram} target="_blank"> {d.enderecosVirtuais.instagram} </a></p>
@@ -164,8 +161,8 @@ class App extends React.Component {
 
                         {d.endereco.map(function (d, idx) {
                           return (
-                            <ul>
-                              <li className="list-group-item btnProdutoDetail" key={idx}>
+                            <ul key={idx}>
+                              <li className="list-group-item btnProdutoDetail" >
                                 <p><span>Endereço {idx + 1}:</span>  {d.local}</p>
                                 <p><span>Telefone:</span>  {d.telefone}</p>
                               </li>
