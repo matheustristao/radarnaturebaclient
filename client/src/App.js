@@ -115,7 +115,7 @@ class App extends React.Component {
 
         {
           this.state.showResults &&
-          <div className="container-fluid text-center">
+          <div id="showResultsDiv" className="container-fluid text-center">
 
             <div className="row text-center">
               <h2>Resultado da busca</h2>
@@ -142,12 +142,12 @@ class App extends React.Component {
 
         {
           this.state.showDetail &&
-          <div className="container">
+          <div id="showDetailDiv" className="container">
 
-            <div id="resultDetailHeader" className="row">
-              <p>Nome: {this.state.produto.nomeProduto}</p>
-              <p>Marca: {this.state.produto.marcaProduto}</p>
-              <p>Gluten Free? {this.state.produto.glutenFree}</p>
+            <div id="resultDetailHeader" className="row headerDetail">
+              <h4><strong>Nome:</strong> {this.state.produto.nomeProduto}</h4>
+              <h4><strong>Marca:</strong> {this.state.produto.marcaProduto}</h4>
+              <h4><strong>Gluten Free?</strong> {this.state.produto.glutenFree}</h4>
             </div>
 
             <div id="resultDetail" className="row">
@@ -156,14 +156,14 @@ class App extends React.Component {
                   <div className="col-sm-4 list-group resultList" key={idx}>
                     <li id={d.idLoja} className="list-group-item btnProdutoDetail">
 
-                      <p>{d.nomeLoja}</p>
+                      <h5>{d.nomeLoja}</h5>
                       <p><span>Facebook:</span> <a href={d.enderecosVirtuais.facebook} target="_blank"> {d.enderecosVirtuais.facebook} </a></p>
                       <p><span>Instagram:</span> <a href={d.enderecosVirtuais.instagram} target="_blank"> {d.enderecosVirtuais.instagram} </a></p>
                       <p><span>WebSite:</span> <a href={d.enderecosVirtuais.website} target="_blank"> {d.enderecosVirtuais.website} </a></p>
 
                       {d.endereco.map(function (d, idx) {
                         return (
-                          <ul key={idx}>
+                          <ul className="list-group" key={idx}>
                             <li className="list-group-item btnProdutoDetail" >
                               <p><span>Endereço {idx + 1}:</span>  {d.local}</p>
                               <p><span>Telefone:</span>  {d.telefone}</p>
