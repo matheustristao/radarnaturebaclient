@@ -20,6 +20,24 @@ class App extends React.Component {
   handleChange(event) {
     this.setState({ inputproduto: event.target.value });
   }
+  deParaGluten(param) {
+    switch (param) {
+      case 'N':
+        return 'Não';
+      case 'S':
+        return 'Sim';
+      default:
+        return 'Não informado';
+    }
+  }
+  dePara(param){
+    switch(param){
+      case undefined:
+        return 'Não informado';
+      default:
+        return param;
+    }
+  }
   procuraProduto = (event) => {
     fetch(this.state.endpointServer + "/produtos?nomeProduto=" + this.state.inputproduto)
       .then(res => res.json())
@@ -53,16 +71,16 @@ class App extends React.Component {
             produto: result
           });
           let arrayIdLojas = [],
-            concatLojas;
-
-          for (var k = 0; k < this.state.produto.lojas.length; k++) {
-            var objectLoja = this.state.produto.lojas[k];
+              concatLojas;
+         
+          for (let k = 0; k < this.state.produto.lojas.length; k++) {
+            let objectLoja = this.state.produto.lojas[k];
             if (arrayIdLojas.includes(objectLoja.idLoja) === false) {
               arrayIdLojas.push(objectLoja.idLoja);
             }
           }
 
-          for (var j = 0; j < arrayIdLojas.length; j++) {
+          for (let j = 0; j < arrayIdLojas.length; j++) {
             if (j === 0) {
               concatLojas = arrayIdLojas[j] + ',';
             } else if (j === arrayIdLojas.length - 1) {
@@ -77,8 +95,13 @@ class App extends React.Component {
             .then(
               (result) => {
                 console.log(result);
+                for(let l=0;l<result.length;l++){
+                  result[l].enderecosVirtuais.facebook = this.dePara(result[l].enderecosVirtuais.facebook); 
+                  result[l].enderecosVirtuais.website = this.dePara(result[l].enderecosVirtuais.website); 
+                  result[l].enderecosVirtuais.instagram = this.dePara(result[l].enderecosVirtuais.instagram); 
+                }
                 this.setState({
-                  arrayLojas: result
+                  arrayLojas: result  
                 });
               },
               (error) => {
@@ -147,7 +170,7 @@ class App extends React.Component {
             <div id="resultDetailHeader" className="row headerDetail">
               <h4><strong>Nome:</strong> {this.state.produto.nomeProduto}</h4>
               <h4><strong>Marca:</strong> {this.state.produto.marcaProduto}</h4>
-              <h4><strong>Gluten Free?</strong> {this.state.produto.glutenFree}</h4>
+              <h4><strong>Gluten Free?</strong> {this.deParaGluten(this.state.produto.glutenFree)}</h4>
             </div>
 
             <div id="resultDetail" className="row">
