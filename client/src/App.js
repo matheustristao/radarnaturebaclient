@@ -113,16 +113,17 @@ class App extends React.Component {
           </div>
         </div>
 
-        <div className="container-fluid text-center">
-          {
-            this.state.showResults &&
+        {
+          this.state.showResults &&
+          <div className="container-fluid text-center">
+
             <div className="row text-center">
               <h2>Resultado da busca</h2>
               <div id="resultList" onClick={this.pesquisaProdutoDetail} className="list-group">
                 {
                   this.state.arrayProdutos.map(function (d, idx) {
                     return (
-                      <div className="col-sm-3 resultList" key = {idx}>
+                      <div className="col-sm-3 resultList" key={idx}>
                         <a className="list-group-item list-group-item-action btnProdutoDetail"
                           id={d.idProduto}
                           href="#">
@@ -136,50 +137,51 @@ class App extends React.Component {
                 }
               </div>
             </div>
-          }
-        </div>
-
-        <div className="container-fluid">
-
-          <div id="resultDetail" className="row">
-            {
-              this.state.showDetail &&
-              <div className="col-sm-6">
-
-                <p>Nome: {this.state.produto.nomeProduto}</p>
-                <p>Marca: {this.state.produto.marcaProduto}</p>
-                <p>Gluten Free? {this.state.produto.glutenFree}</p>
-
-                {this.state.arrayLojas.map(function (d, idx) {
-                  return (
-                    <ul id="produtoDetail" className="list-group" key={idx}>
-                      <li id={d.idLoja} className="list-group-item btnProdutoDetail">
-                        <p>{d.nomeLoja}</p>
-                        <p><span>Facebook:</span> <a href={d.enderecosVirtuais.facebook} target="_blank"> {d.enderecosVirtuais.facebook} </a></p>
-                        <p><span>Instagram:</span> <a href={d.enderecosVirtuais.instagram} target="_blank"> {d.enderecosVirtuais.instagram} </a></p>
-                        <p><span>WebSite:</span> <a href={d.enderecosVirtuais.website} target="_blank"> {d.enderecosVirtuais.website} </a></p>
-
-                        {d.endereco.map(function (d, idx) {
-                          return (
-                            <ul key={idx}>
-                              <li className="list-group-item btnProdutoDetail" >
-                                <p><span>Endereço {idx + 1}:</span>  {d.local}</p>
-                                <p><span>Telefone:</span>  {d.telefone}</p>
-                              </li>
-                            </ul>
-                          )
-                        })
-                        }
-                      </li>
-                    </ul>
-                  )
-                })
-                }
-              </div>
-            }
           </div>
+        }
 
-        </div>
+        {
+          this.state.showDetail &&
+          <div className="container">
+
+            <div id="resultDetailHeader" className="row">
+              <p>Nome: {this.state.produto.nomeProduto}</p>
+              <p>Marca: {this.state.produto.marcaProduto}</p>
+              <p>Gluten Free? {this.state.produto.glutenFree}</p>
+            </div>
+
+            <div id="resultDetail" className="row">
+              {this.state.arrayLojas.map(function (d, idx) {
+                return (
+                  <div className="col-sm-4 list-group resultList" key={idx}>
+                    <li id={d.idLoja} className="list-group-item btnProdutoDetail">
+
+                      <p>{d.nomeLoja}</p>
+                      <p><span>Facebook:</span> <a href={d.enderecosVirtuais.facebook} target="_blank"> {d.enderecosVirtuais.facebook} </a></p>
+                      <p><span>Instagram:</span> <a href={d.enderecosVirtuais.instagram} target="_blank"> {d.enderecosVirtuais.instagram} </a></p>
+                      <p><span>WebSite:</span> <a href={d.enderecosVirtuais.website} target="_blank"> {d.enderecosVirtuais.website} </a></p>
+
+                      {d.endereco.map(function (d, idx) {
+                        return (
+                          <ul key={idx}>
+                            <li className="list-group-item btnProdutoDetail" >
+                              <p><span>Endereço {idx + 1}:</span>  {d.local}</p>
+                              <p><span>Telefone:</span>  {d.telefone}</p>
+                            </li>
+                          </ul>
+                        )
+                      })
+                      }
+
+                    </li>
+                  </div>
+                )
+              })}
+
+            </div>
+
+          </div>
+        }
 
         <footer className="text-center">
           <p>Não nos responsailizamos pelo estoque dos estabelecimentos</p>
