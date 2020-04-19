@@ -42,6 +42,9 @@ class App extends React.Component {
       )
   }
   pesquisaProdutoDetail = (event) => {
+
+    console.log(event.target);
+
     fetch(this.state.endpointServer + "/produtoDetail?idProduto=" + event.target.id)
       .then(res => res.json())
       .then(
@@ -66,7 +69,7 @@ class App extends React.Component {
               concatLojas = arrayIdLojas[j] + ',';
             } else if (j === arrayIdLojas.length - 1) {
               concatLojas = concatLojas + arrayIdLojas[j];
-            }else {
+            } else {
               concatLojas = concatLojas + arrayIdLojas[j] + ',';
             }
           }
@@ -100,45 +103,47 @@ class App extends React.Component {
         <div className="jumbotron text-center">
           <h1>Cadê meu produto natureba?</h1>
           <p>A gente encontra pra você</p>
-        </div>
-
-        <div className="container">
-          <div className="row">
-            <div className="col-sm-6">
-              <h3>Procure por produto</h3>
-              <div className="form-inline">
-                <div className="input-group">
-                  <input id="inputProduto" className="form-control" type="text" value={this.state.inputproduto} onChange={this.handleChange} size="30" placeholder="Ex: PASTA DE AMENDOÍM" />
-                  <div className="input-group-btn">
-                    <button id="btnPesquisarProduto" onClick={this.procuraProduto} type="button" className="btn btn-default btnsearch">
-                      Pesquisar
+          <div className="form-inline">
+            <div className="input-group">
+              <input id="inputProduto" className="form-control" size="40" type="text" value={this.state.inputproduto} onChange={this.handleChange} placeholder="Ex: PASTA DE AMENDOÍM" />
+              <div className="input-group-btn">
+                <button id="btnPesquisarProduto" onClick={this.procuraProduto} type="button" className="btn btn-default">
+                  Pesquisar
                     </button>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
-          <div className="row">
-            <div className="col-sm-6">
-              {
-                this.state.showResults &&
-                <div id="resultList" onClick={this.pesquisaProdutoDetail} className="list-group">
-                  {
-                    this.state.arrayProdutos.map(function (d, idx) {
-                      return (
+        </div>
+
+        <div className="container-fluid text-center">
+          {
+            this.state.showResults &&
+            <div className="row text-center">
+              <h2>Resultado da busca</h2>
+              <div id="resultList" onClick={this.pesquisaProdutoDetail} className="list-group">
+                {
+                  this.state.arrayProdutos.map(function (d, idx) {
+                    return (
+                      <div className="col-sm-3 resultList">
                         <a className="list-group-item list-group-item-action btnProdutoDetail"
                           id={d.idProduto}
                           href="#"
                           key={idx}>
-                          Nome: {d.nomeProduto} - Marca {d.marcaProduto}
+                          Nome: {d.nomeProduto}
+                          <br></br>
+                          Marca: {d.marcaProduto}
                         </a>
-                      )
-                    })
-                  }
-                </div>
-              }
+                      </div>
+                    )
+                  })
+                }
+              </div>
             </div>
-          </div>
+          }
+        </div>
+
+        <div className="container-fluid">
+
           <div id="resultDetail" className="row">
             {
               this.state.showDetail &&
@@ -147,28 +152,38 @@ class App extends React.Component {
                 <p>Nome: {this.state.produto.nomeProduto}</p>
                 <p>Marca: {this.state.produto.marcaProduto}</p>
                 <p>Gluten Free? {this.state.produto.glutenFree}</p>
-                <ul id="produtoDetail" className="list-group">
-                  {this.state.arrayLojas.map(function (d, idx) {
-                    return (
+
+                {this.state.arrayLojas.map(function (d, idx) {
+                  return (
+                    <ul id="produtoDetail" className="list-group">
                       <li id={d.idLoja} className="list-group-item btnProdutoDetail" key={idx}>
-                        {d.nomeLoja}
-                        <ul>
-                          {d.endereco.map(function (d, idx) {
-                            return (
+                        <p>{d.nomeLoja}</p>
+                        <p><span>Facebook:</span> <a href={d.enderecosVirtuais.facebook} target="_blank"> {d.enderecosVirtuais.facebook} </a></p>
+                        <p><span>Instagram:</span> <a href={d.enderecosVirtuais.instagram} target="_blank"> {d.enderecosVirtuais.instagram} </a></p>
+                        <p><span>WebSite:</span> <a href={d.enderecosVirtuais.website} target="_blank"> {d.enderecosVirtuais.website} </a></p>
+
+                        {d.endereco.map(function (d, idx) {
+                          return (
+                            <ul>
                               <li className="list-group-item btnProdutoDetail" key={idx}>
-                                Endereço {idx + 1} - {d.local}
+                                <p><span>Endereço {idx + 1}:</span>  {d.local}</p>
+                                <p><span>Telefone:</span>  {d.telefone}</p>
                               </li>
-                            )})
-                          }
-                        </ul>
+                            </ul>
+                          )
+                        })
+                        }
                       </li>
-                    )})
-                  }
-                </ul>
+                    </ul>
+                  )
+                })
+                }
               </div>
             }
           </div>
+
         </div>
+
         <footer className="text-center">
           <p>Não nos responsailizamos pelo estoque dos estabelecimentos</p>
           <p>Desenvolvido por Cesar&Tristão</p>
@@ -176,6 +191,7 @@ class App extends React.Component {
             <li><a href="#contact"> Entre em contato <span className="glyphicon glyphicon-send"></span></a></li>
           </ul>
         </footer>
+
       </div>
     );
   }

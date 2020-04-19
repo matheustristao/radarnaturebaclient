@@ -8,9 +8,10 @@
                 "telefone": "(19) 3307-0007"
             }
         ],
-        "enderecosVirtuais": [
-            { "facebook": "https://www.facebook.com/feellife.oficial" }
-        ]
+        "enderecosVirtuais": {
+            "facebook": "https://www.facebook.com/feellife.oficial",
+            "instagram": "https://www.instagram.com/feellife.oficial"
+        }
     },
     {
         "idLoja": 2,
@@ -19,13 +20,17 @@
             {
                 "local": "Shopping Parque Dom Pedro",
                 "telefone": "(19) 3756-9503"
+            },
+            {
+                "local": "R. Maria Monteiro, 1476 - Cambuí, Campinas - SP",
+                "telefone": "(19) 3253-5533"
             }
         ],
-        "enderecosVirtuais": [
-            { "website": "https://www.mundoverde.com.br/" }
-        ]
+        "enderecosVirtuais": {
+            "website": "https://www.mundoverde.com.br/"
+        }
     },
-	{
+    {
         "idLoja": 3,
         "nomeLoja": "MONATI",
         "endereco": [
@@ -34,8 +39,8 @@
                 "telefone": "(19) 99988-8442"
             }
         ],
-        "enderecosVirtuais": [
-            { "website": "https://www.instagram.com/monatialimentos/" }
-        ]
+        "enderecosVirtuais": {
+            "instagram": "https://www.instagram.com/monatialimentos/"
+        }
     }
 ]

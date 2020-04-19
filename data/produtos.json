@@ -20,4 +20,37 @@
             { "idLoja": 1 },
 			{ "idLoja": 3 }
         ]
+    },
+    {
+        "idProduto": 3,
+        "idCategoria": 1,
+        "nomeProduto": "BARRA DE CEREAL",
+        "marcaProduto": "NUTRY",
+        "glutenFree": "N",
+        "lojas": [
+            { "idLoja": 1 },
+            { "idLoja": 2 },
+            { "idLoja": 3 }
+        ]
+    },
+    {
+        "idProduto": 4,
+        "idCategoria": 1,
+        "nomeProduto": "PASTA DE AMENDOAS",
+        "marcaProduto": "POWER ONE",
+        "glutenFree": "S",
+        "lojas": [
+            { "idLoja": 1 }
+        ]
+    },
+    {
+        "idProduto": 5,
+        "idCategoria": 1,
+        "nomeProduto": "CASTANHA DE CAJU",
+        "marcaProduto": "",
+        "glutenFree": "S",
+        "lojas": [
+            { "idLoja": 2 },
+            { "idLoja": 3 }
+        ]
     }]

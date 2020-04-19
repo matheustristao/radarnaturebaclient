@@ -16,9 +16,9 @@ code {
   background-color: #1abc9c; 
   color: #ffffff;
 }
-.btnsearch{
-    background-color: #1abc9c;
-    color: #ffffff;
+
+.resultList{
+  margin-top: 20px;
 }
 
 footer{
