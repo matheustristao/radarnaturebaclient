@@ -12,9 +12,17 @@ code {
     monospace;
 }
 
+#btnPesquisarProduto{
+  margin-left: 4%;
+}
+
 .jumbotron {
   background-color: #1abc9c; 
   color: #ffffff;
+}
+
+.btnProdutoDetail{
+  background-color: #ffffff;
 }
 
 .formJumbo{

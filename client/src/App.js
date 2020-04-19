@@ -30,9 +30,11 @@ class App extends React.Component {
         return 'Não informado';
     }
   }
-  dePara(param){
-    switch(param){
+  dePara(param) {
+    switch (param) {
       case undefined:
+        return 'Não informado';
+      case '':
         return 'Não informado';
       default:
         return param;
@@ -71,8 +73,8 @@ class App extends React.Component {
             produto: result
           });
           let arrayIdLojas = [],
-              concatLojas;
-         
+            concatLojas;
+
           for (let k = 0; k < this.state.produto.lojas.length; k++) {
             let objectLoja = this.state.produto.lojas[k];
             if (arrayIdLojas.includes(objectLoja.idLoja) === false) {
@@ -95,13 +97,13 @@ class App extends React.Component {
             .then(
               (result) => {
                 console.log(result);
-                for(let l=0;l<result.length;l++){
-                  result[l].enderecosVirtuais.facebook = this.dePara(result[l].enderecosVirtuais.facebook); 
-                  result[l].enderecosVirtuais.website = this.dePara(result[l].enderecosVirtuais.website); 
-                  result[l].enderecosVirtuais.instagram = this.dePara(result[l].enderecosVirtuais.instagram); 
+                for (let l = 0; l < result.length; l++) {
+                  result[l].enderecosVirtuais.facebook = this.dePara(result[l].enderecosVirtuais.facebook);
+                  result[l].enderecosVirtuais.website = this.dePara(result[l].enderecosVirtuais.website);
+                  result[l].enderecosVirtuais.instagram = this.dePara(result[l].enderecosVirtuais.instagram);
                 }
                 this.setState({
-                  arrayLojas: result  
+                  arrayLojas: result
                 });
               },
               (error) => {
@@ -123,7 +125,7 @@ class App extends React.Component {
 
         <div className="jumbotron text-center">
           <h1>Cadê meu produto natureba?</h1>
-          <p>A gente encontra pra você</p>
+          <h4>A gente encontra pra você</h4>
           <div className="form-inline formJumbo">
             <div className="input-group">
               <input id="inputProduto" className="form-control" size="40" type="text" value={this.state.inputproduto} onChange={this.handleChange} placeholder="Ex: PASTA DE AMENDOÍM" />
@@ -169,7 +171,7 @@ class App extends React.Component {
 
             <div id="resultDetailHeader" className="row headerDetail">
               <h4><strong>Nome:</strong> {this.state.produto.nomeProduto}</h4>
-              <h4><strong>Marca:</strong> {this.state.produto.marcaProduto}</h4>
+              <h4><strong>Marca:</strong> {this.dePara(this.state.produto.marcaProduto)}</h4>
               <h4><strong>Gluten Free?</strong> {this.deParaGluten(this.state.produto.glutenFree)}</h4>
             </div>
 
