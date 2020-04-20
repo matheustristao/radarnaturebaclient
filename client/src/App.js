@@ -176,7 +176,7 @@ class App extends React.Component {
                 this.state.arrayProdutos.map((d, idx) => {
                   return (
                     <div key={idx} className="card containerCards">
-                      <img className="card-img-top" src={this.loadImage(d.idProduto)} alt="Card image"></img>
+                      <img className="card-img-top" src={this.loadImage(d.idProduto)} alt={this.nomeProduto}></img>
                       <div className="card-body">
                         <h5 className="card-title">{d.nomeProduto}</h5>
                         <h6 className="card-subtitle mb-2 text-muted">{this.dePara(d.marcaProduto)}</h6>
