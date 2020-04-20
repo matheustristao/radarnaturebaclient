@@ -10,6 +10,7 @@ class App extends React.Component {
       inputproduto: '',
       showResults: false,
       showDetail: false,
+      showAlert: false,
       produto: '',
       arrayProdutos: [],
       arrayLojas: []
@@ -40,26 +41,45 @@ class App extends React.Component {
         return param;
     }
   }
+  loadImage = (idProduto) => {
+    let imagem;
+    try {
+      imagem = require('./images/' + idProduto + '.png');
+    } catch (e) {
+      imagem = require('./images/no-image.png');
+    }
+    return imagem;
+  }
   procuraProduto = () => {
-    fetch(this.state.endpointServer + "/produtos?nomeProduto=" + this.state.inputproduto)
-      .then(res => res.json())
-      .then(
-        (result) => {
-          this.setState({
-            arrayProdutos: result,
-            showResults: true,
-            showDetail: false
-          });
-          console.log(this.state.arrayProdutos);
-        },
-        (error) => {
-          this.setState({
-            showResults: true,
-            showDetail: false
-          });
-          console.log(error);
-        }
-      )
+
+    if (this.state.inputproduto.trim() === '') {
+      this.setState({
+        showAlert: true,
+        showResults: false,
+        showDetail: false
+      });
+    } else {
+      fetch(this.state.endpointServer + "/produtos?nomeProduto=" + this.state.inputproduto)
+        .then(res => res.json())
+        .then(
+          (result) => {
+            this.setState({
+              arrayProdutos: result,
+              showResults: true,
+              showDetail: false,
+              showAlert: false
+            });
+            console.log(this.state.arrayProdutos);
+          },
+          (error) => {
+            this.setState({
+              showResults: true,
+              showDetail: false
+            });
+            console.log(error);
+          }
+        )
+    }
   }
   pesquisaProdutoDetail = (event) => {
     fetch(this.state.endpointServer + "/produtoDetail?idProduto=" + event.target.id)
@@ -68,6 +88,7 @@ class App extends React.Component {
         (result) => {
           this.setState({
             showResults: false,
+            showAlert: false,
             showDetail: true,
             produto: result
           });
@@ -137,6 +158,14 @@ class App extends React.Component {
         </header>
 
         {
+          this.state.showAlert &&
+          <div className="container">
+            <div className="alert alert-danger">
+              <strong>Nome do produto não pode ser vazio!</strong>
+            </div>
+          </div>
+        }
+        {
           this.state.showResults &&
           <div id="showResultsDiv" className="container-fluid text-center">
             <div className="row justify-content-center">
@@ -147,6 +176,7 @@ class App extends React.Component {
                 this.state.arrayProdutos.map((d, idx) => {
                   return (
                     <div key={idx} className="card containerCards">
+                      <img className="card-img-top" src={this.loadImage(d.idProduto)} alt="Card image"></img>
                       <div className="card-body">
                         <h5 className="card-title">{d.nomeProduto}</h5>
                         <h6 className="card-subtitle mb-2 text-muted">{this.dePara(d.marcaProduto)}</h6>
@@ -166,20 +196,23 @@ class App extends React.Component {
           <div id="showDetailDiv" className="container">
 
             <div id="resultDetailHeader" className="row">
-              <ul className="list-group list-group-flush">
-              <li className="list-group-item"><strong>Nome:</strong> {this.state.produto.nomeProduto}</li>
-              <li className="list-group-item"><strong>Marca:</strong> {this.dePara(this.state.produto.marcaProduto)}</li>
-              <li className="list-group-item"><strong>Gluten Free?</strong> {this.deParaGluten(this.state.produto.glutenFree)}</li>
-              </ul>
+              <dl>
+                <dt>Nome:</dt>
+                <dd>{this.state.produto.nomeProduto}</dd>
+                <dt>Marca:</dt>
+                <dd>{this.dePara(this.state.produto.marcaProduto)}</dd>
+                <dt>Gluten Free?</dt>
+                <dd>{this.deParaGluten(this.state.produto.glutenFree)}</dd>
+              </dl>
             </div>
 
             <div id="resultDetail" className="row">
               {this.state.arrayLojas.map((d, idx) => {
                 return (
                   <div key={idx} className="card detailCards">
-                  <div id={d.idLoja} className="card-body">
-                    <h5 className="card-title">{d.nomeLoja}</h5>
-                    <p className="card-text"><span>Facebook:</span> <a href={d.enderecosVirtuais.facebook} target="_blank"> {d.enderecosVirtuais.facebook} </a></p>
+                    <div id={d.idLoja} className="card-body">
+                      <h5 className="card-title">{d.nomeLoja}</h5>
+                      <p className="card-text"><span>Facebook:</span> <a href={d.enderecosVirtuais.facebook} target="_blank"> {d.enderecosVirtuais.facebook} </a></p>
                       <p className="card-text"><span>Instagram:</span> <a href={d.enderecosVirtuais.instagram} target="_blank"> {d.enderecosVirtuais.instagram} </a></p>
                       <p className="card-text"><span>WebSite:</span> <a href={d.enderecosVirtuais.website} target="_blank"> {d.enderecosVirtuais.website} </a></p>
                       {d.endereco.map((d, idx) => {
@@ -193,8 +226,8 @@ class App extends React.Component {
                         )
                       })
                       }
+                    </div>
                   </div>
-                </div>
                 )
               })}
 
