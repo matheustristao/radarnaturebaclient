@@ -177,7 +177,7 @@ class App extends React.Component {
                 {
                   this.state.arrayProdutos.map((d, idx) => {
                     return (
-                      <div key={idx} className="card containerCards">
+                      <div key={idx} className="card">
                         <img className="card-img-top" src={this.loadImage(d.idProduto)} alt={this.nomeProduto}></img>
                         <div className="card-body">
                           <h5 className="card-title">{d.nomeProduto}</h5>
@@ -215,9 +215,9 @@ class App extends React.Component {
                   <div key={idx} className="card detailCards">
                     <div id={d.idLoja} className="card-body">
                       <h5 className="card-title">{d.nomeLoja}</h5>
-                      <p className="card-text"><span>Facebook:</span> <a href={d.enderecosVirtuais.facebook} target="_blank"> {d.enderecosVirtuais.facebook} </a></p>
-                      <p className="card-text"><span>Instagram:</span> <a href={d.enderecosVirtuais.instagram} target="_blank"> {d.enderecosVirtuais.instagram} </a></p>
-                      <p className="card-text"><span>WebSite:</span> <a href={d.enderecosVirtuais.website} target="_blank"> {d.enderecosVirtuais.website} </a></p>
+                      <p className="card-text"><span>Facebook:</span> <a href={d.enderecosVirtuais.facebook} target="_blank" rel="noopener noreferrer"> {d.enderecosVirtuais.facebook} </a></p>
+                      <p className="card-text"><span>Instagram:</span> <a href={d.enderecosVirtuais.instagram} target="_blank" rel="noopener noreferrer"> {d.enderecosVirtuais.instagram} </a></p>
+                      <p className="card-text"><span>WebSite:</span> <a href={d.enderecosVirtuais.website} target="_blank" rel="noopener noreferrer"> {d.enderecosVirtuais.website} </a></p>
                       {d.endereco.map((d, idx) => {
                         return (
                           <ul className="list-group" key={idx}>

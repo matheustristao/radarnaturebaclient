@@ -25,17 +25,13 @@ code {
   background-color: #ffffff;
 }
 
-.card-deck{
-  width: 100%;
-}
-
-.containerCards{
-  width: 18rem;
-}
-
 .detailCards{
   margin: 1%;
   width: 22rem;
+}
+
+.card-deck{
+  margin: 0;
 }
 
 footer{
