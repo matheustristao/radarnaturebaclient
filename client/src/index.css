@@ -29,13 +29,18 @@ code {
   padding: 0px 5%;
 }
 
-.headerDetail{
-  padding: 0 0 0 2%;
+.containerResultList{
+  margin-left: 1%;
 }
 
-.resultList{
-  padding: 1% 1%;
+.containerCards{
+  margin: 1%;
+  width: 18rem;
+}
 
+.detailCards{
+  margin: 1%;
+  width: 22rem;
 }
 
 footer{

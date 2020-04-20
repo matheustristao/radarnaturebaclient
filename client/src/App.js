@@ -62,7 +62,6 @@ class App extends React.Component {
       )
   }
   pesquisaProdutoDetail = (event) => {
-
     fetch(this.state.endpointServer + "/produtoDetail?idProduto=" + event.target.id)
       .then(res => res.json())
       .then(
@@ -124,15 +123,15 @@ class App extends React.Component {
       <div className="">
 
         <header className="jumbotron text-center">
-          <h1>Cadê meu produto natureba?</h1>
-          <h4>A gente encontra pra você</h4>
-          <div className="form-inline formJumbo">
+          <h1 className="display-4">Cadê meu produto natureba?</h1>
+          <h4 className="my-4">A gente encontra pra você</h4>
+          <div className="form-inline formJumbo justify-content-center">
             <div className="input-group">
               <input id="inputProduto" className="form-control" size="40" type="text" value={this.state.inputproduto} onChange={this.handleChange} placeholder="Ex: PASTA DE AMENDOÍM" />
-              <div className="input-group-btn">
-                <button id="btnPesquisarProduto" onClick={this.procuraProduto} type="button" className="btn btn-default">
+              <div className="input-group-append">
+                <button id="btnPesquisarProduto" onClick={this.procuraProduto} type="button" className="btn btn-primary">
                   Pesquisar
-                    </button>
+                 </button>
               </div>
             </div>
           </div>
@@ -141,25 +140,24 @@ class App extends React.Component {
         {
           this.state.showResults &&
           <div id="showResultsDiv" className="container-fluid text-center">
-            <div className="row text-center">
+            <div className="row text-center containerResultList">
               <h2>Resultado da busca</h2>
-              <div id="resultList" onClick={this.pesquisaProdutoDetail} className="list-group">
-                {
-                  this.state.arrayProdutos.map(function (d, idx) {
-                    return (
-                      <div className="col-sm-3 resultList" key={idx}>
-                        <a className="list-group-item list-group-item-action btnProdutoDetail"
-                          id={d.idProduto}
-                          href="#">
-                          Nome: {d.nomeProduto}
-                          <br></br>
-                          Marca: {d.marcaProduto}
-                        </a>
+            </div>
+            <div id="resultList" className="row text-center">
+              {
+                this.state.arrayProdutos.map((d, idx) => {
+                  return (
+                    <div key={idx} className="card containerCards">
+                      <div className="card-body">
+                        <h5 className="card-title">{d.nomeProduto}</h5>
+                        <h6 className="card-subtitle mb-2 text-muted">{this.dePara(d.marcaProduto)}</h6>
+                        <p className="card-text">Lorem Ipsum</p>
+                        <a id={d.idProduto} href="#" onClick={this.pesquisaProdutoDetail} className="card-link">Acessar produto</a>
                       </div>
-                    )
-                  })
-                }
-              </div>
+                    </div>
+                  )
+                })
+              }
             </div>
           </div>
         }
@@ -168,24 +166,24 @@ class App extends React.Component {
           this.state.showDetail &&
           <div id="showDetailDiv" className="container">
 
-            <div id="resultDetailHeader" className="row headerDetail">
-              <h4><strong>Nome:</strong> {this.state.produto.nomeProduto}</h4>
-              <h4><strong>Marca:</strong> {this.dePara(this.state.produto.marcaProduto)}</h4>
-              <h4><strong>Gluten Free?</strong> {this.deParaGluten(this.state.produto.glutenFree)}</h4>
+            <div id="resultDetailHeader" className="row">
+              <ul className="list-group list-group-flush">
+              <li className="list-group-item"><strong>Nome:</strong> {this.state.produto.nomeProduto}</li>
+              <li className="list-group-item"><strong>Marca:</strong> {this.dePara(this.state.produto.marcaProduto)}</li>
+              <li className="list-group-item"><strong>Gluten Free?</strong> {this.deParaGluten(this.state.produto.glutenFree)}</li>
+              </ul>
             </div>
 
             <div id="resultDetail" className="row">
-              {this.state.arrayLojas.map(function (d, idx) {
+              {this.state.arrayLojas.map((d, idx) => {
                 return (
-                  <div className="col-sm-4 list-group resultList" key={idx}>
-                    <li id={d.idLoja} className="list-group-item btnProdutoDetail">
-
-                      <h5>{d.nomeLoja}</h5>
-                      <p><span>Facebook:</span> <a href={d.enderecosVirtuais.facebook} target="_blank"> {d.enderecosVirtuais.facebook} </a></p>
-                      <p><span>Instagram:</span> <a href={d.enderecosVirtuais.instagram} target="_blank"> {d.enderecosVirtuais.instagram} </a></p>
-                      <p><span>WebSite:</span> <a href={d.enderecosVirtuais.website} target="_blank"> {d.enderecosVirtuais.website} </a></p>
-
-                      {d.endereco.map(function (d, idx) {
+                  <div key={idx} className="card detailCards">
+                  <div id={d.idLoja} className="card-body">
+                    <h5 className="card-title">{d.nomeLoja}</h5>
+                    <p className="card-text"><span>Facebook:</span> <a href={d.enderecosVirtuais.facebook} target="_blank"> {d.enderecosVirtuais.facebook} </a></p>
+                      <p className="card-text"><span>Instagram:</span> <a href={d.enderecosVirtuais.instagram} target="_blank"> {d.enderecosVirtuais.instagram} </a></p>
+                      <p className="card-text"><span>WebSite:</span> <a href={d.enderecosVirtuais.website} target="_blank"> {d.enderecosVirtuais.website} </a></p>
+                      {d.endereco.map((d, idx) => {
                         return (
                           <ul className="list-group" key={idx}>
                             <li className="list-group-item btnProdutoDetail" >
@@ -196,9 +194,8 @@ class App extends React.Component {
                         )
                       })
                       }
-
-                    </li>
                   </div>
+                </div>
                 )
               })}
 
