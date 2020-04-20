@@ -172,21 +172,23 @@ class App extends React.Component {
               <h2>Resultado da busca</h2>
             </div>
             <div id="resultList" className="row justify-content-center">
-              {
-                this.state.arrayProdutos.map((d, idx) => {
-                  return (
-                    <div key={idx} className="card containerCards">
-                      <img className="card-img-top" src={this.loadImage(d.idProduto)} alt={this.nomeProduto}></img>
-                      <div className="card-body">
-                        <h5 className="card-title">{d.nomeProduto}</h5>
-                        <h6 className="card-subtitle mb-2 text-muted">{this.dePara(d.marcaProduto)}</h6>
-                        <p className="card-text">Lorem Ipsum</p>
-                        <button id={d.idProduto} type="button" onClick={this.pesquisaProdutoDetail} className="btn btn-success card-link">Acessar produto</button>
+              <div className="card-deck">
+                {
+                  this.state.arrayProdutos.map((d, idx) => {
+                    return (
+                      <div key={idx} className="card containerCards">
+                        <img className="card-img-top" src={this.loadImage(d.idProduto)} alt={this.nomeProduto}></img>
+                        <div className="card-body">
+                          <h5 className="card-title">{d.nomeProduto}</h5>
+                          <h6 className="card-subtitle mb-2 text-muted">{this.dePara(d.marcaProduto)}</h6>
+                          <p className="card-text">Lorem Ipsum</p>
+                          <button id={d.idProduto} type="button" onClick={this.pesquisaProdutoDetail} className="btn btn-success card-link">Acessar produto</button>
+                        </div>
                       </div>
-                    </div>
-                  )
-                })
-              }
+                    )
+                  })
+                }
+              </div>
             </div>
           </div>
         }
