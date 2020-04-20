@@ -209,31 +209,32 @@ class App extends React.Component {
               </dl>
             </div>
 
-            <div id="resultDetail" className="row">
-              {this.state.arrayLojas.map((d, idx) => {
-                return (
-                  <div key={idx} className="card detailCards">
-                    <div id={d.idLoja} className="card-body">
-                      <h5 className="card-title">{d.nomeLoja}</h5>
-                      <p className="card-text"><span>Facebook:</span> <a href={d.enderecosVirtuais.facebook} target="_blank" rel="noopener noreferrer"> {d.enderecosVirtuais.facebook} </a></p>
-                      <p className="card-text"><span>Instagram:</span> <a href={d.enderecosVirtuais.instagram} target="_blank" rel="noopener noreferrer"> {d.enderecosVirtuais.instagram} </a></p>
-                      <p className="card-text"><span>WebSite:</span> <a href={d.enderecosVirtuais.website} target="_blank" rel="noopener noreferrer"> {d.enderecosVirtuais.website} </a></p>
-                      {d.endereco.map((d, idx) => {
-                        return (
-                          <ul className="list-group" key={idx}>
-                            <li className="list-group-item btnProdutoDetail" >
-                              <p><span>Endereço {idx + 1}:</span>  {d.local}</p>
-                              <p><span>Telefone:</span>  {d.telefone}</p>
-                            </li>
-                          </ul>
-                        )
-                      })
-                      }
+            <div id="resultDetail" className="row justify-content-center">
+              <div className="card-deck">
+                {this.state.arrayLojas.map((d, idx) => {
+                  return (
+                    <div key={idx} className="card detailCards">
+                      <div id={d.idLoja} className="card-body">
+                        <h5 className="card-title">{d.nomeLoja}</h5>
+                        <p className="card-text"><span>Facebook:</span> <a href={d.enderecosVirtuais.facebook} target="_blank" rel="noopener noreferrer"> {d.enderecosVirtuais.facebook} </a></p>
+                        <p className="card-text"><span>Instagram:</span> <a href={d.enderecosVirtuais.instagram} target="_blank" rel="noopener noreferrer"> {d.enderecosVirtuais.instagram} </a></p>
+                        <p className="card-text"><span>WebSite:</span> <a href={d.enderecosVirtuais.website} target="_blank" rel="noopener noreferrer"> {d.enderecosVirtuais.website} </a></p>
+                        {d.endereco.map((d, idx) => {
+                          return (
+                            <ul className="list-group" key={idx}>
+                              <li className="list-group-item btnProdutoDetail" >
+                                <p><span>Endereço {idx + 1}:</span>  {d.local}</p>
+                                <p><span>Telefone:</span>  {d.telefone}</p>
+                              </li>
+                            </ul>
+                          )
+                        })
+                        }
+                      </div>
                     </div>
-                  </div>
-                )
-              })}
-
+                  )
+                })}
+              </div>
             </div>
 
           </div>
@@ -243,7 +244,7 @@ class App extends React.Component {
           <p>Não nos responsabilizamos pelo estoque dos estabelecimentos</p>
           <p>Desenvolvido por Cesar&Tristão</p>
           <ul className="list-group">
-            <li><a href="#contact"> Entre em contato <span className="glyphicon glyphicon-send"></span></a></li>
+            <li><a href="#"> Entre em contato</a></li>
           </ul>
         </footer>
 
