@@ -1,12 +1,13 @@
 import React from 'react';
 //import logo from './logo.svg';
 import './App.css';
+import config from './config/default.json';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      endpointServer: "http://192.168.1.16:5000",
+      endpointServer: config.api.server + ":" + config.api.port,
       inputproduto: '',
       showResults: false,
       showDetail: false,
