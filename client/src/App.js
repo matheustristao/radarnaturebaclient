@@ -124,7 +124,7 @@ class App extends React.Component {
         <header className="jumbotron text-center">
           <h1 className="display-4">Cadê meu produto natureba?</h1>
           <h5 className="my-4">A gente encontra pra você</h5>
-          <div className="form-inline formJumbo justify-content-center">
+          <div className="form-inline justify-content-center">
             <div className="input-group">
               <input id="inputProduto" className="form-control" size="40" type="text" value={this.state.inputproduto} onChange={this.handleChange} placeholder="Ex: PASTA DE AMENDOÍM" />
               <div className="input-group-append">
@@ -139,7 +139,7 @@ class App extends React.Component {
         {
           this.state.showResults &&
           <div id="showResultsDiv" className="container-fluid text-center">
-            <div className="row containerResultList justify-content-center">
+            <div className="row justify-content-center">
               <h2>Resultado da busca</h2>
             </div>
             <div id="resultList" className="row justify-content-center">
