@@ -1,10 +1,11 @@
-const MongoClient = require('mongodb').MongoClient,
-      config = require('config');
-      fs = require('fs');
+import { MongoClient } from 'mongodb';
+import { get } from 'config';
 
-const server = config.get('database.server'),
-    port = config.get('database.port'),
-    database = config.get('database.database'),
+const fs = require('fs');
+
+const server = get('database.server'),
+    port = get('database.port'),
+    database = get('database.database'),
     url = "mongodb://" + server + ":" + port + "/" + database;
 
 
