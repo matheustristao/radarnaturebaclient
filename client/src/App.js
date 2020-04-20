@@ -121,15 +121,14 @@ class App extends React.Component {
   render() {
     return (
       <div className="">
-
         <header className="jumbotron text-center">
           <h1 className="display-4">Cadê meu produto natureba?</h1>
-          <h4 className="my-4">A gente encontra pra você</h4>
+          <h5 className="my-4">A gente encontra pra você</h5>
           <div className="form-inline formJumbo justify-content-center">
             <div className="input-group">
               <input id="inputProduto" className="form-control" size="40" type="text" value={this.state.inputproduto} onChange={this.handleChange} placeholder="Ex: PASTA DE AMENDOÍM" />
               <div className="input-group-append">
-                <button id="btnPesquisarProduto" onClick={this.procuraProduto} type="button" className="btn btn-primary">
+                <button id="btnPesquisarProduto" onClick={this.procuraProduto} type="button" className="btn btn-success">
                   Pesquisar
                  </button>
               </div>
@@ -140,10 +139,10 @@ class App extends React.Component {
         {
           this.state.showResults &&
           <div id="showResultsDiv" className="container-fluid text-center">
-            <div className="row text-center containerResultList">
+            <div className="row containerResultList justify-content-center">
               <h2>Resultado da busca</h2>
             </div>
-            <div id="resultList" className="row text-center">
+            <div id="resultList" className="row justify-content-center">
               {
                 this.state.arrayProdutos.map((d, idx) => {
                   return (
@@ -152,7 +151,7 @@ class App extends React.Component {
                         <h5 className="card-title">{d.nomeProduto}</h5>
                         <h6 className="card-subtitle mb-2 text-muted">{this.dePara(d.marcaProduto)}</h6>
                         <p className="card-text">Lorem Ipsum</p>
-                        <a id={d.idProduto} href="#" onClick={this.pesquisaProdutoDetail} className="card-link">Acessar produto</a>
+                        <button id={d.idProduto} type="button" onClick={this.pesquisaProdutoDetail} className="btn btn-success card-link">Acessar produto</button>
                       </div>
                     </div>
                   )
@@ -205,7 +204,7 @@ class App extends React.Component {
         }
 
         <footer className="text-center">
-          <p>Não nos responsailizamos pelo estoque dos estabelecimentos</p>
+          <p>Não nos responsabilizamos pelo estoque dos estabelecimentos</p>
           <p>Desenvolvido por Cesar&Tristão</p>
           <ul className="list-group">
             <li><a href="#contact"> Entre em contato <span className="glyphicon glyphicon-send"></span></a></li>
