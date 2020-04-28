@@ -237,11 +237,12 @@ class App extends React.Component {
                 </div>
               </div>
             </div>
-            <div className="row justify-content-center ">
-              <img src={this.loadImage(this.state.selectedProduto)} alt={this.nomeProduto}></img>
+            <div className="container">
+              <div className="row justify-content-center">
+                <img src={this.loadImage(this.state.selectedProduto)} alt={this.nomeProduto}></img>
+              </div>
             </div>
           </div>
-
         }
 
         {
