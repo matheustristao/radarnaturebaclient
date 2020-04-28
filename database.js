@@ -97,7 +97,7 @@ module.exports = {
         });
     },
 
-    returnLoja: function (arrayLoja) {
+    returnLoja: function (arrayLoja,regio) {
 
         var transformedArrayLoja = new Array();
 
@@ -116,7 +116,8 @@ module.exports = {
 
                 dbo.collection("lojas").find(
                     {
-                        "idLoja": { "$in": transformedArrayLoja }
+                        "idLoja": { "$in": transformedArrayLoja },
+                        "endereco.regio": regio
                     },
                     {
                         projection:

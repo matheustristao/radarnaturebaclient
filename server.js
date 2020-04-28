@@ -47,7 +47,7 @@ app.get('/produtoDetail', function (req, res) {
 });
 
 app.get('/lojas', function (req, res) {
-    database.returnLoja(req.query.idLoja).then(function (result) {
+    database.returnLoja(req.query.idLoja,req.query.regio).then(function (result) {
         res.status(202);
         res.end(JSON.stringify(result));
     }, function (err) {

@@ -1,11 +1,12 @@
-import { MongoClient } from 'mongodb';
-import { get } from 'config';
+const MongoClient = require('mongodb').MongoClient,
+    config = require('config');
+'use strict';
 
 const fs = require('fs');
 
-const server = get('database.server'),
-    port = get('database.port'),
-    database = get('database.database'),
+const server = config.get('database.server'),
+    port = config.get('database.port'),
+    database = config.get('database.database'),
     url = "mongodb://" + server + ":" + port + "/" + database;
 
 
@@ -19,7 +20,7 @@ MongoClient.connect(url, function (err, db) {
 
         let rawdata = fs.readFileSync('./data/produtos.json');
         let arrayProduto = JSON.parse(rawdata);
-    
+
         dbo.collection("produtos").insertMany(arrayProduto, function (err, res) {
             if (err) throw err;
             console.log("Produto inserido");

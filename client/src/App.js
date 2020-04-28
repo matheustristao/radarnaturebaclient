@@ -128,7 +128,7 @@ class App extends React.Component {
             }
           }
 
-          fetch(this.state.endpointServer + "/lojas?idLoja=" + concatLojas)
+          fetch(this.state.endpointServer + "/lojas?idLoja=" + concatLojas + "&regio=" + this.state.regio)
             .then(res => res.json())
             .then(
               (result) => {
@@ -166,7 +166,7 @@ class App extends React.Component {
               <div className="form-group mr-sm-2">
                 <select className="form-control" value={this.state.regio} onChange={this.handleChangeRegio} >
                   <option>Estado</option>
-                  <option>São Paulo</option>
+                  <option value="SP">São Paulo</option>
                 </select>
               </div>
               <div className="form-group">
