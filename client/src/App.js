@@ -228,6 +228,9 @@ class App extends React.Component {
           this.state.showInputRegio &&
           <div id="showInputRegio" className="container mb-2">
             <div className="row justify-content-center">
+              <h4>Em qual estado você mora?</h4>
+            </div>
+            <div className="row justify-content-center">
               <div className="col-sm-4 input-group">
                 <select className="form-control" value={this.state.regio} onChange={this.handleChangeRegio}>
                   <option value=''>Estado</option>
