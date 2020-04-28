@@ -13,6 +13,7 @@ class App extends React.Component {
       showResults: false,
       showDetail: false,
       showAlert: false,
+      mensagemErro: '',
       produto: '',
       arrayProdutos: [],
       arrayLojas: []
@@ -61,14 +62,16 @@ class App extends React.Component {
       this.setState({
         showAlert: true,
         showResults: false,
-        showDetail: false
+        showDetail: false,
+        mensagemErro: 'Você deve escolher um estado antes!'
       });
     }
     else if (this.state.inputproduto.trim() === '') {
       this.setState({
         showAlert: true,
         showResults: false,
-        showDetail: false
+        showDetail: false,
+        mensagemErro: 'Nome do produto não pode ser vazio'
       });
     }
     else {
@@ -181,7 +184,7 @@ class App extends React.Component {
           <div className="container">
             <div className="row justify-content-center">
               <div className="alert alert-danger">
-                <strong>Nome do produto não pode ser vazio!</strong>
+              <strong>{this.state.mensagemErro}</strong>
               </div>
             </div>
           </div>
