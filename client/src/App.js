@@ -52,9 +52,9 @@ class App extends React.Component {
   loadImage = (idProduto) => {
     let imagem;
     try {
-      imagem = require('./images/' + idProduto + '.png');
+      imagem = require('./images/produtos/' + idProduto + '.png');
     } catch (e) {
-      imagem = require('./images/no-image.png');
+      imagem = require('./images/produtos/no-image.png');
     }
     return imagem;
   }
@@ -149,12 +149,6 @@ class App extends React.Component {
                       mensagemErro: "Nenhuma loja encontrada no seu estado possui esse produto"
                     });
                   } else {
-
-                    for (let l = 0; l < result.length; l++) {
-                      result[l].enderecosVirtuais.facebook = this.dePara(result[l].enderecosVirtuais.facebook);
-                      result[l].enderecosVirtuais.website = this.dePara(result[l].enderecosVirtuais.website);
-                      result[l].enderecosVirtuais.instagram = this.dePara(result[l].enderecosVirtuais.instagram);
-                    }
                     this.setState({
                       arrayLojas: result,
                       showResults: false,
@@ -290,18 +284,15 @@ class App extends React.Component {
             <div id="showDetailDiv" className="container">
               <div id="resultDetail" className="row justify-content-center">
                 <div className="card-deck">
-                  {this.state.arrayLojas.map((d, idx) => {
+                  {this.state.arrayLojas.map((loja, idx) => {
                     return (
                       <div key={idx} className="card detailCards">
-                        <div id="cardStoreHeader" className="card-header text-center"><h4>{d.nomeLoja}</h4></div>
-                        <div id={d.idLoja} className="card-body">
-                          <p className="card-text"><span>Facebook:</span> <a href={d.enderecosVirtuais.facebook} target="_blank" rel="noopener noreferrer"> {d.enderecosVirtuais.facebook} </a></p>
-                          <p className="card-text"><span>Instagram:</span> <a href={d.enderecosVirtuais.instagram} target="_blank" rel="noopener noreferrer"> {d.enderecosVirtuais.instagram} </a></p>
-                          <p className="card-text"><span>WebSite:</span> <a href={d.enderecosVirtuais.website} target="_blank" rel="noopener noreferrer"> {d.enderecosVirtuais.website} </a></p>
+                        <div id="cardStoreHeader" className="card-header text-center"><h4>{loja.nomeLoja}</h4></div>
+                        <div id={loja.idLoja} className="card-body">
                           <h5 className="card-title">Endereços</h5>
                           {
-                            d.endereco.map((enderecoLoja, idx) => {
-                              if (enderecoLoja.regio == this.state.regio) {
+                            loja.endereco.map((enderecoLoja, idx) => {
+                              if (enderecoLoja.regio === this.state.regio) {
                                 return (
                                   <ul className="list-group" key={idx}>
                                     <li className="list-group-item btnProdutoDetail" >
@@ -313,6 +304,12 @@ class App extends React.Component {
                               }
                             })
                           }
+                          <h5 className="card-title">Redes Sociais</h5>
+                          <p className="card-text">
+                            <a className="mr-sm-2" href={loja.enderecosVirtuais.facebook} target="_blank" rel="noopener noreferrer"> <img className="i" src={require('./images/icons/facebook.png')} alt="facebook"></img> </a>
+                            <a className="mr-sm-2" href={loja.enderecosVirtuais.instagram} target="_blank" rel="noopener noreferrer"> <img className="i" src={require('./images/icons/instagram.png')} alt="instagram"></img> </a>
+                            <a className="mr-sm-2" href={loja.enderecosVirtuais.website} target="_blank" rel="noopener noreferrer"> <img className="i" src={require('./images/icons/browser.png')} alt="website"></img></a>
+                          </p>
                         </div>
                       </div>
                     )
