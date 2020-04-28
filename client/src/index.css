@@ -12,10 +12,6 @@ code {
     monospace;
 }
 
-#btnPesquisarProduto{
-  margin-left: 4%;
-}
-
 .jumbotron {
   background-color: #1abc9c; 
   color: #ffffff;
@@ -31,6 +27,13 @@ code {
 
 .detailCards{
   width: 22rem;
+  border-color: #1abc9c ;
+}
+
+#cardStoreHeader{
+    color: #fff;
+    background-color: #1abc9c;
+    padding: 25px;
 }
 
 .card-deck{

@@ -9,6 +9,7 @@ class App extends React.Component {
     this.state = {
       endpointServer: config.api.server + ":" + config.api.port,
       inputproduto: '',
+      regio: 'estado',
       showResults: false,
       showDetail: false,
       showAlert: false,
@@ -21,6 +22,9 @@ class App extends React.Component {
   }
   handleChange(event) {
     this.setState({ inputproduto: event.target.value });
+  }
+  handleChangeRegio = (event) =>{
+    this.setState({regio:event.target.value});
   }
   deParaGluten(param) {
     switch (param) {
@@ -53,13 +57,21 @@ class App extends React.Component {
   }
   procuraProduto = () => {
 
-    if (this.state.inputproduto.trim() === '') {
+    if (this.state.regio === 'estado') {
       this.setState({
         showAlert: true,
         showResults: false,
         showDetail: false
       });
-    } else {
+    }
+    else if (this.state.inputproduto.trim() === '') {
+      this.setState({
+        showAlert: true,
+        showResults: false,
+        showDetail: false
+      });
+    }
+    else {
       fetch(this.state.endpointServer + "/produtos?nomeProduto=" + this.state.inputproduto)
         .then(res => res.json())
         .then(
@@ -147,22 +159,30 @@ class App extends React.Component {
           <h1 className="display-4">Cadê meu produto natureba?</h1>
           <h5 className="my-4">A gente encontra pra você</h5>
           <div className="form-inline justify-content-center">
-            <div className="input-group">
-              <input id="inputProduto" className="form-control" size="40" type="text" value={this.state.inputproduto} onChange={this.handleChange} placeholder="Ex: PASTA DE AMENDOÍM" />
-              <div className="input-group-append">
-                <button id="btnPesquisarProduto" onClick={this.procuraProduto} type="button" className="btn btn-success">
-                  Pesquisar
-                 </button>
+            <form className="form-inline">
+              <div className="form-group mr-sm-2">
+                <select className="form-control" value={this.state.regio} onChange={this.handleChangeRegio} >
+                  <option>Estado</option>
+                  <option>São Paulo</option>
+                </select>
               </div>
-            </div>
+              <div className="form-group">
+                <input id="inputProduto" className="form-control mr-sm-2" size="40" type="text" value={this.state.inputproduto} onChange={this.handleChange} placeholder="Ex: PASTA DE AMENDOÍM" />
+              </div>
+              <button id="btnPesquisarProduto" onClick={this.procuraProduto} type="button" className="btn btn-success mr-sm-2">
+                Pesquisar
+              </button>
+            </form>
           </div>
         </header>
 
         {
           this.state.showAlert &&
           <div className="container">
-            <div className="alert alert-danger">
-              <strong>Nome do produto não pode ser vazio!</strong>
+            <div className="row justify-content-center">
+              <div className="alert alert-danger">
+                <strong>Nome do produto não pode ser vazio!</strong>
+              </div>
             </div>
           </div>
         }
@@ -214,11 +234,12 @@ class App extends React.Component {
                 {this.state.arrayLojas.map((d, idx) => {
                   return (
                     <div key={idx} className="card detailCards">
+                      <div id="cardStoreHeader" className="card-header text-center"><h4>{d.nomeLoja}</h4></div>
                       <div id={d.idLoja} className="card-body">
-                        <h5 className="card-title">{d.nomeLoja}</h5>
                         <p className="card-text"><span>Facebook:</span> <a href={d.enderecosVirtuais.facebook} target="_blank" rel="noopener noreferrer"> {d.enderecosVirtuais.facebook} </a></p>
                         <p className="card-text"><span>Instagram:</span> <a href={d.enderecosVirtuais.instagram} target="_blank" rel="noopener noreferrer"> {d.enderecosVirtuais.instagram} </a></p>
                         <p className="card-text"><span>WebSite:</span> <a href={d.enderecosVirtuais.website} target="_blank" rel="noopener noreferrer"> {d.enderecosVirtuais.website} </a></p>
+                        <h5 className="card-title">Endereços</h5>
                         {d.endereco.map((d, idx) => {
                           return (
                             <ul className="list-group" key={idx}>
