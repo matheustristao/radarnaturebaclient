@@ -77,7 +77,8 @@ class App extends React.Component {
               arrayProdutos: result,
               showResults: true,
               showDetail: false,
-              showAlert: false
+              showAlert: false,
+              showInputRegio: false
             });
             console.log(this.state.arrayProdutos);
           },
@@ -256,51 +257,70 @@ class App extends React.Component {
 
         {
           this.state.showDetail &&
-          <div id="showDetailDiv" className="container">
+          <div id="showDetail">
 
-            <div id="resultDetailHeader" className="row">
-              <dl>
-                <dt>Nome:</dt>
-                <dd>{this.state.produto.nomeProduto}</dd>
-                <dt>Marca:</dt>
-                <dd>{this.dePara(this.state.produto.marcaProduto)}</dd>
-                <dt>Gluten Free?</dt>
-                <dd>{this.deParaGluten(this.state.produto.glutenFree)}</dd>
-              </dl>
-            </div>
-
-            <div id="resultDetail" className="row justify-content-center">
-              <div className="card-deck">
-                {this.state.arrayLojas.map((d, idx) => {
-                  return (
-                    <div key={idx} className="card detailCards">
-                      <div id="cardStoreHeader" className="card-header text-center"><h4>{d.nomeLoja}</h4></div>
-                      <div id={d.idLoja} className="card-body">
-                        <p className="card-text"><span>Facebook:</span> <a href={d.enderecosVirtuais.facebook} target="_blank" rel="noopener noreferrer"> {d.enderecosVirtuais.facebook} </a></p>
-                        <p className="card-text"><span>Instagram:</span> <a href={d.enderecosVirtuais.instagram} target="_blank" rel="noopener noreferrer"> {d.enderecosVirtuais.instagram} </a></p>
-                        <p className="card-text"><span>WebSite:</span> <a href={d.enderecosVirtuais.website} target="_blank" rel="noopener noreferrer"> {d.enderecosVirtuais.website} </a></p>
-                        <h5 className="card-title">Endereços</h5>
-                        {
-                          d.endereco.map((enderecoLoja, idx) => {
-                            if (enderecoLoja.regio == this.state.regio) {
-                              return (
-                                <ul className="list-group" key={idx}>
-                                  <li className="list-group-item btnProdutoDetail" >
-                                    <p><span>Endereço {idx + 1}:</span>  {enderecoLoja.local}</p>
-                                    <p><span>Telefone:</span>  {enderecoLoja.telefone}</p>
-                                  </li>
-                                </ul>
-                              )
-                            }
-                          })
-                        }
-                      </div>
-                    </div>
-                  )
-                })}
+            <div id="showDetailHeaderDiv" className="container mb-4">
+              <div id="resultDetailHeader" className="row justify-content-center">
+                <div className="col-sm-3">
+                  <img className="img-thumbnail" src={this.loadImage(this.state.selectedProduto)} alt={this.nomeProduto}></img>
+                </div>
+                <div className="col-sm-3">
+                  <dl>
+                    <dt>Nome:</dt>
+                    <dd>{this.state.produto.nomeProduto}</dd>
+                    <dt>Marca:</dt>
+                    <dd>{this.dePara(this.state.produto.marcaProduto)}</dd>
+                    <dt>Gluten Free?</dt>
+                    <dd>{this.deParaGluten(this.state.produto.glutenFree)}</dd>
+                  </dl>
+                </div>
+                <div className="col-sm-3">
+                  <dl>
+                    <dt>Nome:</dt>
+                    <dd>{this.state.produto.nomeProduto}</dd>
+                    <dt>Marca:</dt>
+                    <dd>{this.dePara(this.state.produto.marcaProduto)}</dd>
+                    <dt>Gluten Free?</dt>
+                    <dd>{this.deParaGluten(this.state.produto.glutenFree)}</dd>
+                  </dl>
+                </div>
               </div>
             </div>
 
+            <div id="showDetailDiv" className="container">
+              <div id="resultDetail" className="row justify-content-center">
+                <div className="card-deck">
+                  {this.state.arrayLojas.map((d, idx) => {
+                    return (
+                      <div key={idx} className="card detailCards">
+                        <div id="cardStoreHeader" className="card-header text-center"><h4>{d.nomeLoja}</h4></div>
+                        <div id={d.idLoja} className="card-body">
+                          <p className="card-text"><span>Facebook:</span> <a href={d.enderecosVirtuais.facebook} target="_blank" rel="noopener noreferrer"> {d.enderecosVirtuais.facebook} </a></p>
+                          <p className="card-text"><span>Instagram:</span> <a href={d.enderecosVirtuais.instagram} target="_blank" rel="noopener noreferrer"> {d.enderecosVirtuais.instagram} </a></p>
+                          <p className="card-text"><span>WebSite:</span> <a href={d.enderecosVirtuais.website} target="_blank" rel="noopener noreferrer"> {d.enderecosVirtuais.website} </a></p>
+                          <h5 className="card-title">Endereços</h5>
+                          {
+                            d.endereco.map((enderecoLoja, idx) => {
+                              if (enderecoLoja.regio == this.state.regio) {
+                                return (
+                                  <ul className="list-group" key={idx}>
+                                    <li className="list-group-item btnProdutoDetail" >
+                                      <p><span>Endereço {idx + 1}:</span>  {enderecoLoja.local}</p>
+                                      <p><span>Telefone:</span>  {enderecoLoja.telefone}</p>
+                                    </li>
+                                  </ul>
+                                )
+                              }
+                            })
+                          }
+                        </div>
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+
+            </div>
           </div>
         }
 
