@@ -203,7 +203,7 @@ class App extends React.Component {
                   this.state.arrayProdutos.map((d, idx) => {
                     return (
                       <div key={idx} className="card">
-                        <img className="card-img-top" src={this.loadImage(d.idProduto)} alt={this.nomeProduto}></img>
+                        <img className="card-img-top" src={this.loadImage(d.idProduto)} alt={d.nomeProduto}></img>
                         <div className="card-body">
                           <h5 className="card-title">{d.nomeProduto}</h5>
                           <h6 className="card-subtitle mb-2 text-muted">{this.dePara(d.marcaProduto)}</h6>
@@ -221,21 +221,27 @@ class App extends React.Component {
 
         {
           this.state.showInputRegio &&
-          <div id="showInputRegio" className="container mb-2">
-            <div className="row justify-content-center">
-              <h4>Em qual estado você mora?</h4>
-            </div>
-            <div className="row justify-content-center">
-              <div className="col-sm-4 input-group">
-                <select className="form-control" value={this.state.regio} onChange={this.handleChangeRegio}>
-                  <option value=''>Estado</option>
-                  <option value="SP">São Paulo</option>
-                  <option value="DF">Distrito Federal</option>
-                </select>
-                <button type="button" onClick={this.pesquisaProdutoDetail} className="btn btn-success">Encontrar!</button>
+          <div id="showInputRegio">
+            <div className="container mb-2">
+              <div className="row justify-content-center">
+                <h4>Em qual estado você mora?</h4>
+              </div>
+              <div className="row justify-content-center">
+                <div className="col-sm-4 input-group">
+                  <select className="form-control" value={this.state.regio} onChange={this.handleChangeRegio}>
+                    <option value=''>Estado</option>
+                    <option value="SP">São Paulo</option>
+                    <option value="DF">Distrito Federal</option>
+                  </select>
+                  <button type="button" onClick={this.pesquisaProdutoDetail} className="btn btn-success">Encontrar!</button>
+                </div>
               </div>
             </div>
+            <div className="row justify-content-center ">
+              <img src={this.loadImage(this.state.selectedProduto)} alt={this.nomeProduto}></img>
+            </div>
           </div>
+
         }
 
         {
@@ -254,6 +260,9 @@ class App extends React.Component {
           <div id="showDetail">
 
             <div id="showDetailHeaderDiv" className="container mb-4">
+              <div id="resultDetailTitle" className="row justify-content-center">
+                <h3>Descrição do produto</h3>
+              </div>
               <div id="resultDetailHeader" className="row justify-content-center">
                 <div className="col-sm-3">
                   <img className="img-thumbnail" src={this.loadImage(this.state.selectedProduto)} alt={this.nomeProduto}></img>
@@ -280,8 +289,10 @@ class App extends React.Component {
                 </div>
               </div>
             </div>
-
             <div id="showDetailDiv" className="container">
+              <div id="resultDetailTitle" className="row justify-content-center">
+                <h3>Lojas encontradas</h3>
+              </div>
               <div id="resultDetail" className="row justify-content-center">
                 <div className="card-deck">
                   {this.state.arrayLojas.map((loja, idx) => {
