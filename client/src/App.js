@@ -9,10 +9,12 @@ class App extends React.Component {
     this.state = {
       endpointServer: config.api.server + ":" + config.api.port,
       inputproduto: '',
-      regio: 'estado',
+      selectedProduto: '',
+      regio: '',
       showResults: false,
       showDetail: false,
       showAlert: false,
+      showInputRegio: false,
       mensagemErro: '',
       produto: '',
       arrayProdutos: [],
@@ -24,8 +26,8 @@ class App extends React.Component {
   handleChange(event) {
     this.setState({ inputproduto: event.target.value });
   }
-  handleChangeRegio = (event) =>{
-    this.setState({regio:event.target.value});
+  handleChangeRegio = (event) => {
+    this.setState({ regio: event.target.value });
   }
   deParaGluten(param) {
     switch (param) {
@@ -58,15 +60,7 @@ class App extends React.Component {
   }
   procuraProduto = () => {
 
-    if (this.state.regio === 'estado') {
-      this.setState({
-        showAlert: true,
-        showResults: false,
-        showDetail: false,
-        mensagemErro: 'Você deve escolher um estado antes!'
-      });
-    }
-    else if (this.state.inputproduto.trim() === '') {
+    if (this.state.inputproduto.trim() === '') {
       this.setState({
         showAlert: true,
         showResults: false,
@@ -97,63 +91,92 @@ class App extends React.Component {
         )
     }
   }
-  pesquisaProdutoDetail = (event) => {
-    fetch(this.state.endpointServer + "/produtoDetail?idProduto=" + event.target.id)
-      .then(res => res.json())
-      .then(
-        (result) => {
-          this.setState({
-            showResults: false,
-            showAlert: false,
-            showDetail: true,
-            produto: result
-          });
-          let arrayIdLojas = [],
-            concatLojas;
+  perguntaRegio = (event) => {
+    this.setState({
+      selectedProduto: event.target.id,
+      showResults: false,
+      showAlert: false,
+      showDetail: false,
+      showInputRegio: true
+    });
 
-          for (let k = 0; k < this.state.produto.lojas.length; k++) {
-            let objectLoja = this.state.produto.lojas[k];
-            if (arrayIdLojas.includes(objectLoja.idLoja) === false) {
-              arrayIdLojas.push(objectLoja.idLoja);
-            }
-          }
+  }
+  pesquisaProdutoDetail = () => {
+    if (this.state.regio === '') {
+      this.setState({
+        showAlert: true,
+        showResults: false,
+        showDetail: false,
+        mensagemErro: 'Você deve escolher um estado antes!'
+      });
+    } else {
+      fetch(this.state.endpointServer + "/produtoDetail?idProduto=" + this.state.selectedProduto)
+        .then(res => res.json())
+        .then(
+          (result) => {
+            this.setState({
+              produto: result
+            });
+            let arrayIdLojas = [],
+              concatLojas;
 
-          for (let j = 0; j < arrayIdLojas.length; j++) {
-            if (j === 0) {
-              concatLojas = arrayIdLojas[j] + ',';
-            } else if (j === arrayIdLojas.length - 1) {
-              concatLojas = concatLojas + arrayIdLojas[j];
-            } else {
-              concatLojas = concatLojas + arrayIdLojas[j] + ',';
-            }
-          }
-
-          fetch(this.state.endpointServer + "/lojas?idLoja=" + concatLojas + "&regio=" + this.state.regio)
-            .then(res => res.json())
-            .then(
-              (result) => {
-                console.log(result);
-                for (let l = 0; l < result.length; l++) {
-                  result[l].enderecosVirtuais.facebook = this.dePara(result[l].enderecosVirtuais.facebook);
-                  result[l].enderecosVirtuais.website = this.dePara(result[l].enderecosVirtuais.website);
-                  result[l].enderecosVirtuais.instagram = this.dePara(result[l].enderecosVirtuais.instagram);
-                }
-                this.setState({
-                  arrayLojas: result
-                });
-              },
-              (error) => {
-                console.log(error);
+            for (let k = 0; k < this.state.produto.lojas.length; k++) {
+              let objectLoja = this.state.produto.lojas[k];
+              if (arrayIdLojas.includes(objectLoja.idLoja) === false) {
+                arrayIdLojas.push(objectLoja.idLoja);
               }
-            )
-        },
-        (error) => {
-          this.setState({
-            showResults: true
-          });
-          console.log(error);
-        }
-      )
+            }
+
+            for (let j = 0; j < arrayIdLojas.length; j++) {
+              if (j === 0) {
+                concatLojas = arrayIdLojas[j] + ',';
+              } else if (j === arrayIdLojas.length - 1) {
+                concatLojas = concatLojas + arrayIdLojas[j];
+              } else {
+                concatLojas = concatLojas + arrayIdLojas[j] + ',';
+              }
+            }
+
+            fetch(this.state.endpointServer + "/lojas?idLoja=" + concatLojas + "&regio=" + this.state.regio)
+              .then(res => res.json())
+              .then(
+                (result) => {
+                  console.log(result);
+                  if (result.length === 0) {
+                    this.setState({
+                      showAlert: true,
+                      mensagemErro: "Nenhuma loja encontrada no seu estado possui esse produto"
+                    });
+                  } else {
+
+                    for (let l = 0; l < result.length; l++) {
+                      result[l].enderecosVirtuais.facebook = this.dePara(result[l].enderecosVirtuais.facebook);
+                      result[l].enderecosVirtuais.website = this.dePara(result[l].enderecosVirtuais.website);
+                      result[l].enderecosVirtuais.instagram = this.dePara(result[l].enderecosVirtuais.instagram);
+                    }
+                    this.setState({
+                      arrayLojas: result,
+                      showResults: false,
+                      showAlert: false,
+                      showDetail: true,
+                      showInputRegio: false
+
+                    });
+                  }
+                },
+                (error) => {
+                  console.log(error);
+                }
+              )
+          },
+          (error) => {
+            this.setState({
+              showResults: true
+            });
+            console.log(error);
+          }
+        )
+    }
   }
   render() {
     return (
@@ -163,12 +186,6 @@ class App extends React.Component {
           <h5 className="my-4">A gente encontra pra você</h5>
           <div className="form-inline justify-content-center">
             <form className="form-inline">
-              <div className="form-group mr-sm-2">
-                <select className="form-control" value={this.state.regio} onChange={this.handleChangeRegio} >
-                  <option>Estado</option>
-                  <option value="SP">São Paulo</option>
-                </select>
-              </div>
               <div className="form-group">
                 <input id="inputProduto" className="form-control mr-sm-2" size="40" type="text" value={this.state.inputproduto} onChange={this.handleChange} placeholder="Ex: PASTA DE AMENDOÍM" />
               </div>
@@ -179,16 +196,6 @@ class App extends React.Component {
           </div>
         </header>
 
-        {
-          this.state.showAlert &&
-          <div className="container">
-            <div className="row justify-content-center">
-              <div className="alert alert-danger">
-              <strong>{this.state.mensagemErro}</strong>
-              </div>
-            </div>
-          </div>
-        }
         {
           this.state.showResults &&
           <div id="showResultsDiv" className="container-fluid text-center">
@@ -206,12 +213,39 @@ class App extends React.Component {
                           <h5 className="card-title">{d.nomeProduto}</h5>
                           <h6 className="card-subtitle mb-2 text-muted">{this.dePara(d.marcaProduto)}</h6>
                           <p className="card-text">Lorem Ipsum</p>
-                          <button id={d.idProduto} type="button" onClick={this.pesquisaProdutoDetail} className="btn btn-success card-link">Acessar produto</button>
+                          <button id={d.idProduto} type="button" onClick={this.perguntaRegio} className="btn btn-success card-link">Encontrar lojas</button>
                         </div>
                       </div>
                     )
                   })
                 }
+              </div>
+            </div>
+          </div>
+        }
+
+        {
+          this.state.showInputRegio &&
+          <div id="showInputRegio" className="container mb-2">
+            <div className="row justify-content-center">
+              <div className="col-sm-4 input-group">
+                <select className="form-control" value={this.state.regio} onChange={this.handleChangeRegio}>
+                  <option value=''>Estado</option>
+                  <option value="SP">São Paulo</option>
+                  <option value="DF">Distrito Federal</option>
+                </select>
+                <button type="button" onClick={this.pesquisaProdutoDetail} className="btn btn-success">Encontrar!</button>
+              </div>
+            </div>
+          </div>
+        }
+
+        {
+          this.state.showAlert &&
+          <div className="container">
+            <div className="row justify-content-center">
+              <div className="alert alert-danger">
+                <strong>{this.state.mensagemErro}</strong>
               </div>
             </div>
           </div>
@@ -243,16 +277,19 @@ class App extends React.Component {
                         <p className="card-text"><span>Instagram:</span> <a href={d.enderecosVirtuais.instagram} target="_blank" rel="noopener noreferrer"> {d.enderecosVirtuais.instagram} </a></p>
                         <p className="card-text"><span>WebSite:</span> <a href={d.enderecosVirtuais.website} target="_blank" rel="noopener noreferrer"> {d.enderecosVirtuais.website} </a></p>
                         <h5 className="card-title">Endereços</h5>
-                        {d.endereco.map((d, idx) => {
-                          return (
-                            <ul className="list-group" key={idx}>
-                              <li className="list-group-item btnProdutoDetail" >
-                                <p><span>Endereço {idx + 1}:</span>  {d.local}</p>
-                                <p><span>Telefone:</span>  {d.telefone}</p>
-                              </li>
-                            </ul>
-                          )
-                        })
+                        {
+                          d.endereco.map((enderecoLoja, idx) => {
+                            if (enderecoLoja.regio == this.state.regio) {
+                              return (
+                                <ul className="list-group" key={idx}>
+                                  <li className="list-group-item btnProdutoDetail" >
+                                    <p><span>Endereço {idx + 1}:</span>  {enderecoLoja.local}</p>
+                                    <p><span>Telefone:</span>  {enderecoLoja.telefone}</p>
+                                  </li>
+                                </ul>
+                              )
+                            }
+                          })
                         }
                       </div>
                     </div>
