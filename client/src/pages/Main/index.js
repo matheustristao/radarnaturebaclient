@@ -2,7 +2,7 @@ import React from 'react';
 import config from '../../config/default.json';
 import api from '../../services/api';
 
-export default class Main extends React.Component {
+class Main extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -51,9 +51,9 @@ export default class Main extends React.Component {
     loadImage = (idProduto) => {
         let imagem;
         try {
-            imagem = require('../../images/produtos/' + idProduto + '.png');
+            imagem = require('./images/produtos/' + idProduto + '.png');
         } catch (e) {
-            imagem = require('../../images/produtos/no-image.png');
+            imagem = require('./images/produtos/no-image.png');
         }
         return imagem;
     }
@@ -119,22 +119,20 @@ export default class Main extends React.Component {
                 let arrayIdLojas = [],
                     concatLojas;
 
-                for (let k = 0; k < this.state.produto.lojas.length; k++) {
-                    let objectLoja = this.state.produto.lojas[k];
-                    if (arrayIdLojas.includes(objectLoja.idLoja) === false) {
-                        arrayIdLojas.push(objectLoja.idLoja);
-                    }
-                }
+                this.state.produto.lojas.forEach(objectLoja => {
+                    if (arrayIdLojas.includes(objectLoja.idLoja) === false)
+                        arrayIdLojas.push(objectLoja.idLoja)
+                });
 
-                for (let j = 0; j < arrayIdLojas.length; j++) {
-                    if (j === 0) {
-                        concatLojas = arrayIdLojas[j] + ',';
-                    } else if (j === arrayIdLojas.length - 1) {
-                        concatLojas = concatLojas + arrayIdLojas[j];
+                arrayIdLojas.forEach((idLoja, idx) => {
+                    if (idx === 0) {
+                        concatLojas = idLoja + ',';
+                    } else if (idx === arrayIdLojas.length - 1) {
+                        concatLojas = concatLojas + idLoja;
                     } else {
-                        concatLojas = concatLojas + arrayIdLojas[j] + ',';
+                        concatLojas = concatLojas + idLoja + ',';
                     }
-                }
+                });
 
                 const responseLoja = await api.get("/lojas?idLoja=" + concatLojas + "&regio=" + this.state.regio);
 
@@ -177,9 +175,7 @@ export default class Main extends React.Component {
                             <div className="form-group">
                                 <input id="inputProduto" className="form-control mr-sm-2" size="40" type="text" value={this.state.inputproduto} onChange={this.handleChange} placeholder="Ex: PASTA DE AMENDOÍM" />
                             </div>
-                            <button id="btnPesquisarProduto" onClick={this.procuraProduto} type="button" className="btn btn-success mr-sm-2">
-                                Pesquisar
-                  </button>
+                            <button id="btnPesquisarProduto" onClick={this.procuraProduto} type="button" className="btn btn-success mr-sm-2">Pesquisar </button>
                         </form>
                     </div>
                 </header>
@@ -311,9 +307,9 @@ export default class Main extends React.Component {
                                                     }
                                                     <h5 className="card-title">Redes Sociais</h5>
                                                     <p className="card-text">
-                                                        <a className="mr-sm-2" href={loja.enderecosVirtuais.facebook} target="_blank" rel="noopener noreferrer"> <img className="i" src={require('../../images/icons/facebook.png')} alt="facebook"></img> </a>
-                                                        <a className="mr-sm-2" href={loja.enderecosVirtuais.instagram} target="_blank" rel="noopener noreferrer"> <img className="i" src={require('../../images/icons/instagram.png')} alt="instagram"></img> </a>
-                                                        <a className="mr-sm-2" href={loja.enderecosVirtuais.website} target="_blank" rel="noopener noreferrer"> <img className="i" src={require('../../images/icons/browser.png')} alt="website"></img></a>
+                                                        <a className="mr-sm-2" href={loja.enderecosVirtuais.facebook} target="_blank" rel="noopener noreferrer"> <img className="i" src={require('./images/icons/facebook.png')} alt="facebook"></img> </a>
+                                                        <a className="mr-sm-2" href={loja.enderecosVirtuais.instagram} target="_blank" rel="noopener noreferrer"> <img className="i" src={require('./images/icons/instagram.png')} alt="instagram"></img> </a>
+                                                        <a className="mr-sm-2" href={loja.enderecosVirtuais.website} target="_blank" rel="noopener noreferrer"> <img className="i" src={require('./images/icons/browser.png')} alt="website"></img></a>
                                                     </p>
                                                 </div>
                                             </div>
@@ -321,7 +317,6 @@ export default class Main extends React.Component {
                                     })}
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 }
@@ -329,3 +324,5 @@ export default class Main extends React.Component {
         );
     }
 };
+
+export default Main;
