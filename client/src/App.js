@@ -1,4 +1,6 @@
 import React from 'react';
+import Footer from './components/footer';
+import api from './services/api';
 //import logo from './logo.svg';
 import './App.css';
 import config from './config/default.json';
@@ -58,7 +60,7 @@ class App extends React.Component {
     }
     return imagem;
   }
-  procuraProduto = () => {
+  procuraProduto = async () => {
 
     if (this.state.inputproduto.trim() === '') {
       this.setState({
@@ -69,27 +71,26 @@ class App extends React.Component {
       });
     }
     else {
-      fetch(this.state.endpointServer + "/produtos?nomeProduto=" + this.state.inputproduto)
-        .then(res => res.json())
-        .then(
-          (result) => {
-            this.setState({
-              arrayProdutos: result,
-              showResults: true,
-              showDetail: false,
-              showAlert: false,
-              showInputRegio: false
-            });
-            console.log(this.state.arrayProdutos);
-          },
-          (error) => {
-            this.setState({
-              showResults: true,
-              showDetail: false
-            });
-            console.log(error);
-          }
-        )
+
+      const response = await api.get("/produtos?nomeProduto=" + this.state.inputproduto);
+
+      if (response.status === 202) {
+        this.setState({
+          arrayProdutos: response.data,
+          showResults: true,
+          showDetail: false,
+          showAlert: false,
+          showInputRegio: false
+        });
+        console.log(this.state.arrayProdutos);
+      } else {
+        this.setState({
+          showResults: true,
+          showDetail: false
+        });
+        console.log(response.statusText);
+      }
+
     }
   }
   perguntaRegio = (event) => {
@@ -102,7 +103,7 @@ class App extends React.Component {
     });
 
   }
-  pesquisaProdutoDetail = () => {
+  pesquisaProdutoDetail = async () => {
     if (this.state.regio === '') {
       this.setState({
         showAlert: true,
@@ -111,66 +112,61 @@ class App extends React.Component {
         mensagemErro: 'Você deve escolher um estado antes!'
       });
     } else {
-      fetch(this.state.endpointServer + "/produtoDetail?idProduto=" + this.state.selectedProduto)
-        .then(res => res.json())
-        .then(
-          (result) => {
-            this.setState({
-              produto: result
-            });
-            let arrayIdLojas = [],
-              concatLojas;
 
-            for (let k = 0; k < this.state.produto.lojas.length; k++) {
-              let objectLoja = this.state.produto.lojas[k];
-              if (arrayIdLojas.includes(objectLoja.idLoja) === false) {
-                arrayIdLojas.push(objectLoja.idLoja);
-              }
-            }
+      const responseProduto = await api.get("/produtoDetail?idProduto=" + this.state.selectedProduto);
 
-            for (let j = 0; j < arrayIdLojas.length; j++) {
-              if (j === 0) {
-                concatLojas = arrayIdLojas[j] + ',';
-              } else if (j === arrayIdLojas.length - 1) {
-                concatLojas = concatLojas + arrayIdLojas[j];
-              } else {
-                concatLojas = concatLojas + arrayIdLojas[j] + ',';
-              }
-            }
+      if (responseProduto.status === 202) {
 
-            fetch(this.state.endpointServer + "/lojas?idLoja=" + concatLojas + "&regio=" + this.state.regio)
-              .then(res => res.json())
-              .then(
-                (result) => {
-                  console.log(result);
-                  if (result.length === 0) {
-                    this.setState({
-                      showAlert: true,
-                      mensagemErro: "Nenhuma loja encontrada no seu estado possui esse produto"
-                    });
-                  } else {
-                    this.setState({
-                      arrayLojas: result,
-                      showResults: false,
-                      showAlert: false,
-                      showDetail: true,
-                      showInputRegio: false
+        this.setState({ produto: responseProduto.data });
 
-                    });
-                  }
-                },
-                (error) => {
-                  console.log(error);
-                }
-              )
-          },
-          (error) => {
-            this.setState({
-              showResults: true
-            });
-            console.log(error);
+        let arrayIdLojas = [],
+          concatLojas;
+
+        for (let k = 0; k < this.state.produto.lojas.length; k++) {
+          let objectLoja = this.state.produto.lojas[k];
+          if (arrayIdLojas.includes(objectLoja.idLoja) === false) {
+            arrayIdLojas.push(objectLoja.idLoja);
           }
-        )
+        }
+
+        for (let j = 0; j < arrayIdLojas.length; j++) {
+          if (j === 0) {
+            concatLojas = arrayIdLojas[j] + ',';
+          } else if (j === arrayIdLojas.length - 1) {
+            concatLojas = concatLojas + arrayIdLojas[j];
+          } else {
+            concatLojas = concatLojas + arrayIdLojas[j] + ',';
+          }
+        }
+
+        const responseLoja = await api.get("/lojas?idLoja=" + concatLojas + "&regio=" + this.state.regio);
+
+        if (responseLoja.status === 202) {
+          console.log(responseLoja.data);
+          if (responseLoja.data.length === 0) {
+            this.setState({
+              showAlert: true,
+              mensagemErro: "Nenhuma loja encontrada no seu estado possui esse produto"
+            });
+          } else {
+            this.setState({
+              arrayLojas: responseLoja.data,
+              showResults: false,
+              showAlert: false,
+              showDetail: true,
+              showInputRegio: false
+            });
+          }
+        } else {
+          console.log(responseLoja.statusText);
+        }
+      } else {
+        this.setState({
+          showResults: true
+        });
+        console.log(responseProduto.statusText);
+      }
+
     }
   }
   render() {
@@ -220,6 +216,17 @@ class App extends React.Component {
         }
 
         {
+          this.state.showAlert &&
+          <div className="container">
+            <div className="row justify-content-center">
+              <div className="alert alert-danger">
+                <strong>{this.state.mensagemErro}</strong>
+              </div>
+            </div>
+          </div>
+        }
+
+        {
           this.state.showInputRegio &&
           <div id="showInputRegio">
             <div className="container mb-2">
@@ -240,17 +247,6 @@ class App extends React.Component {
             <div className="container">
               <div className="row justify-content-center">
                 <img src={this.loadImage(this.state.selectedProduto)} alt={this.nomeProduto}></img>
-              </div>
-            </div>
-          </div>
-        }
-
-        {
-          this.state.showAlert &&
-          <div className="container">
-            <div className="row justify-content-center">
-              <div className="alert alert-danger">
-                <strong>{this.state.mensagemErro}</strong>
               </div>
             </div>
           </div>
@@ -333,14 +329,7 @@ class App extends React.Component {
           </div>
         }
 
-        <footer className="text-center">
-          <p>Não nos responsabilizamos pelo estoque dos estabelecimentos</p>
-          <p>Desenvolvido por Cesar&Tristão</p>
-          <ul className="list-group">
-            <li><a href="#"> Entre em contato</a></li>
-          </ul>
-        </footer>
-
+        <Footer />
       </div>
     );
   }
