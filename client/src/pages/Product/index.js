@@ -41,7 +41,7 @@ export default class Product extends Component {
         this.setState({ regio: event.target.value });
     }
 
-    deParaGluten(param) {
+    deParaGlutenLac(param) {
         switch (param) {
             case 'N':
                 return 'Não';
@@ -141,7 +141,7 @@ export default class Product extends Component {
                 }
                 {this.state.showInputRegio &&
                     <div id="showInputRegio">
-                        <div className="container mb-2">
+                        <div className="container mb-4">
                             <div className="row justify-content-center">
                                 <h4>Em qual estado você mora?</h4>
                             </div>
@@ -158,7 +158,19 @@ export default class Product extends Component {
                         </div>
                         <div className="container">
                             <div className="row justify-content-center">
-                                <img src={this.loadImage(this.state.produto.idProduto)} alt={this.state.produto.nomeProduto}></img>
+                                <h5>Produto escolhido</h5>
+                            </div>
+                            <div id="resultDetailHeader" className="row justify-content-center">
+                                <div className="col-sm-3">
+                                    <img className="img-thumbnail" src={this.loadImage(this.state.produto.idProduto)} alt={this.state.produto.nomeProduto}></img>
+                                </div>
+                                <div className="col-sm-3">
+                                    <dl>
+                                        <dd><strong>Nome: </strong>{this.state.produto.nomeProduto}</dd>                                    
+                                        <dd><strong>Marca: </strong>{this.dePara(this.state.produto.marcaProduto)}</dd>                                       
+                                        <dd> <strong>Descrição: </strong>{this.dePara(this.state.produto.descricaoProduto)}</dd>
+                                    </dl>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -175,22 +187,22 @@ export default class Product extends Component {
                                 </div>
                                 <div className="col-sm-3">
                                     <dl>
-                                        <dt>Nome:</dt>
+                                        <dt>Nome</dt>
                                         <dd>{this.state.produto.nomeProduto}</dd>
-                                        <dt>Marca:</dt>
+                                        <dt>Marca</dt>
                                         <dd>{this.dePara(this.state.produto.marcaProduto)}</dd>
-                                        <dt>Gluten Free?</dt>
-                                        <dd>{this.deParaGluten(this.state.produto.glutenFree)}</dd>
+                                        <dt>Descrição</dt>
+                                        <dd>{this.dePara(this.state.produto.descricaoProduto)}</dd>
                                     </dl>
                                 </div>
                                 <div className="col-sm-3">
                                     <dl>
-                                        <dt>Nome:</dt>
-                                        <dd>{this.state.produto.nomeProduto}</dd>
-                                        <dt>Marca:</dt>
-                                        <dd>{this.dePara(this.state.produto.marcaProduto)}</dd>
+                                        <dt>Calorias</dt>
+                                        <dd>{this.dePara(this.state.produto.calorias)}</dd>
                                         <dt>Gluten Free?</dt>
-                                        <dd>{this.deParaGluten(this.state.produto.glutenFree)}</dd>
+                                        <dd>{this.deParaGlutenLac(this.state.produto.glutenFree)}</dd>
+                                        <dt>Zero lactose?</dt>
+                                        <dd>{this.deParaGlutenLac(this.state.produto.lacFree)}</dd>
                                     </dl>
                                 </div>
                             </div>

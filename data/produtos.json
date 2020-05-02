@@ -4,7 +4,10 @@
         "idCategoria": 1,
         "nomeProduto": "PASTA DE AMENDOIM",
         "marcaProduto": "POWER ONE",
+        "descricaoProduto":"Pasta de amendoím integral",
+        "calorias":"",
         "glutenFree": "S",
+        "lacFree": "S",
         "lojas": [
             { "idLoja": 1 },
             { "idLoja": 2 }
@@ -15,7 +18,10 @@
         "idCategoria": 1,
         "nomeProduto": "CASTANHA DO PARA",
         "marcaProduto": "",
+        "descricaoProduto":"Bertholletia excelsa, popularmente conhecida como castanha-do-brasil, castanha-da-amazônia, castanha-do-acre, castanha-do-pará, noz amazônica, noz boliviana, tocari ou tururi",
+        "calorias":"656 calorias / 100 g",
         "glutenFree": "S",
+        "lacFree": "S",
         "lojas": [
             { "idLoja": 1 },
 			{ "idLoja": 3 }
@@ -26,7 +32,10 @@
         "idCategoria": 1,
         "nomeProduto": "BARRA DE CEREAL",
         "marcaProduto": "NUTRY",
+        "descricaoProduto":"",
+        "calorias":"",
         "glutenFree": "N",
+        "lacFree": "S",
         "lojas": [
             { "idLoja": 1 },
             { "idLoja": 2 },
@@ -38,7 +47,10 @@
         "idCategoria": 1,
         "nomeProduto": "PASTA DE AMENDOAS",
         "marcaProduto": "POWER ONE",
+        "descricaoProduto":"",
+        "calorias":"",
         "glutenFree": "S",
+        "lacFree": "S",
         "lojas": [
             { "idLoja": 1 }
         ]
@@ -48,7 +60,10 @@
         "idCategoria": 1,
         "nomeProduto": "CASTANHA DE CAJU",
         "marcaProduto": "",
+        "descricaoProduto":"",
+        "calorias":"",
         "glutenFree": "S",
+        "lacFree": "S",
         "lojas": [
             { "idLoja": 2 },
             { "idLoja": 3 }
