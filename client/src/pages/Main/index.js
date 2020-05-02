@@ -109,7 +109,7 @@ class Main extends React.Component {
                                                 <div className="card-body">
                                                     <h5 className="card-title">{d.nomeProduto}</h5>
                                                     <h6 className="card-subtitle mb-2 text-muted">{this.dePara(d.marcaProduto)}</h6>
-                                                    <p className="card-text">Lorem Ipsum</p>
+                                                    <p className="card-text">{this.dePara(d.descricaoProduto)}</p>
                                                     <Link to={`/produto/${d.idProduto}`}>
                                                         <button type="button" className="btn btn-success card-link">Encontrar lojas</button>
                                                     </Link>
