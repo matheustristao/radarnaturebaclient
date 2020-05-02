@@ -1,34 +1,37 @@
 {
-  "name": "agregador",
-  "version": "1.0.0",
-  "description": "agregador de produtos naturais",
-  "main": "server.js",
+  "name": "client",
+  "version": "0.1.0",
+  "proxy": "http://localhost:5000",
+  "private": true,
   "dependencies": {
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.5.0",
+    "@testing-library/user-event": "^7.2.1",
     "axios": "^0.19.2",
-    "body-parser": "^1.19.0",
-    "config": "^3.3.1",
-    "express": "^4.17.1",
-    "mongodb": "^3.5.5"
-  },
-  "devDependencies": {
-    "concurrently": "^5.1.0",
-    "nodemon": "^2.0.3"
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "3.4.1"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "client": "npm run start --prefix client",
-    "dev": "concurrently --kill-others-on-fail \"npm run nodemon\" \"npm run client\"",
-    "start": "node server.js",
-    "nodemon": "nodemon server.js"
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/matheustristao/agregador.git"
+  "eslintConfig": {
+    "extends": "react-app"
   },
-  "author": "matheus oliveira tristao dos anjos",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/matheustristao/agregador/issues"
-  },
-  "homepage": "https://github.com/matheustristao/agregador#readme"
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
 }
