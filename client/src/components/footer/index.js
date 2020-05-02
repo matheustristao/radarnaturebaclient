@@ -1,12 +1,10 @@
 import React from 'react';
 
 const Footer = () => (
-    <footer id="main-footer" className="text-center">
+  <footer id="main-footer" className="text-center">
     <p>Não nos responsabilizamos pelo estoque dos estabelecimentos</p>
-    <p>Desenvolvido por Cesar&Tristão</p>
-    <ul className="list-group">
-      <li><a href="#"> Entre em contato</a></li>
-    </ul>
+    <p>Desenvolvido por <strong>Cesar&Tristão</strong></p>
+    <button id="btnPesquisarProduto" type="button" className="btn btn-secondary btnContact">Entre em contato</button> 
   </footer>
 );
 

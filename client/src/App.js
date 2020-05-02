@@ -1,7 +1,6 @@
 import React from 'react';
-import Main from './pages/Main';
+import Routes from './routes';
 import Footer from './components/footer';
-//import logo from './logo.svg';
 import './App.css';
 
 class App extends React.Component {
@@ -9,7 +8,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <Main />
+        <Routes />
         <Footer />
       </div>
     );
