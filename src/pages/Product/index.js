@@ -166,8 +166,8 @@ export default class Product extends Component {
                                 </div>
                                 <div className="col-sm-3">
                                     <dl>
-                                        <dd><strong>Nome: </strong>{this.state.produto.nomeProduto}</dd>                                    
-                                        <dd><strong>Marca: </strong>{this.dePara(this.state.produto.marcaProduto)}</dd>                                       
+                                        <dd><strong>Nome: </strong>{this.state.produto.nomeProduto}</dd>
+                                        <dd><strong>Marca: </strong>{this.dePara(this.state.produto.marcaProduto)}</dd>
                                         <dd> <strong>Descrição: </strong>{this.dePara(this.state.produto.descricaoProduto)}</dd>
                                     </dl>
                                 </div>
@@ -234,11 +234,16 @@ export default class Product extends Component {
                                                         })
                                                     }
                                                     <h5 className="card-title">Redes Sociais</h5>
-                                                    <p className="card-text">
+                                                    <p className="card-text text-center">
                                                         <a className="mr-sm-2" href={loja.enderecosVirtuais.facebook} target="_blank" rel="noopener noreferrer"> <img className="i" src={require('../images/icons/facebook.png')} alt="facebook"></img> </a>
                                                         <a className="mr-sm-2" href={loja.enderecosVirtuais.instagram} target="_blank" rel="noopener noreferrer"> <img className="i" src={require('../images/icons/instagram.png')} alt="instagram"></img> </a>
                                                         <a className="mr-sm-2" href={loja.enderecosVirtuais.website} target="_blank" rel="noopener noreferrer"> <img className="i" src={require('../images/icons/browser.png')} alt="website"></img></a>
                                                     </p>
+                                                    <div className="text-center">
+                                                        <Link to={`/loja/${loja.idLoja}`}>
+                                                            <button className="btn btn-success">Acessar catálogo da loja</button>
+                                                        </Link>
+                                                    </div>
                                                 </div>
                                             </div>
                                         )
