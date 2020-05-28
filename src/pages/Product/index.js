@@ -81,25 +81,7 @@ export default class Product extends Component {
             });
         } else {
 
-            let arrayIdLojas = [],
-                concatLojas;
-
-            this.state.produto.lojas.forEach(objectLoja => {
-                if (arrayIdLojas.includes(objectLoja.idLoja) === false)
-                    arrayIdLojas.push(objectLoja.idLoja)
-            });
-
-            arrayIdLojas.forEach((idLoja, idx) => {
-                if (idx === 0) {
-                    concatLojas = idLoja + ',';
-                } else if (idx === arrayIdLojas.length - 1) {
-                    concatLojas = concatLojas + idLoja;
-                } else {
-                    concatLojas = concatLojas + idLoja + ',';
-                }
-            });
-
-            const responseLoja = await api.get("/lojas?idLoja=" + concatLojas + "&regio=" + this.state.regio);
+            const responseLoja = await api.get("/lojas?idProduto=" + this.state.produto.idProduto + "&regio=" + this.state.regio);
 
             if (responseLoja.status === 202) {
                 console.log(responseLoja.data);
