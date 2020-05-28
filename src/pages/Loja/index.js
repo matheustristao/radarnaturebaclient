@@ -25,7 +25,7 @@ export default class Loja extends Component {
                 enderecos: responseLoja.data.endereco
             });
 
-            const responseProdutos = await api.get(`/produtosLoja?idLoja=${idLoja}`);
+            const responseProdutos = await api.get(`/produtosLoja?idProduto=${this.state.loja.produtos}`);
 
             if (responseProdutos.status === 202 && responseProdutos) {
                 console.log(responseProdutos);
