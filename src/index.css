@@ -3,6 +3,11 @@
   color: #ffffff;
 }
 
+.masthead {
+  background-color: #1abc9c;
+  padding: 10px 0 10px 0;
+}
+
 .btnProdutoDetail{
   background-color: #ffffff;
 }
