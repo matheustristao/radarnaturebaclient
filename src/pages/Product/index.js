@@ -84,9 +84,9 @@ export default class Product extends Component {
     render() {
         return (
             <div className="">
-                <header className="jumbotron text-center">
-                    <h1 className="display-4">Cadê meu produto natureba?</h1>
-                    <Link to="/" id="btnPesquisarProduto" type="button" className="btn btn-light">Refazer busca</Link>
+                <header className="masthead text-white text-center">
+                    <h1 className="mb-4">Cadê meu produto natureba?</h1>
+                    <Link to="/" id="btnPesquisarProduto" type="button" className="btn btn-primary">Refazer busca</Link>
                 </header>
 
                 <div id="showDetail">
@@ -152,7 +152,7 @@ export default class Product extends Component {
                                                 </p>
                                                 <div className="text-center">
                                                     <Link to={`/loja/${loja.idLoja}`}>
-                                                        <button className="btn btn-success">Acessar catálogo da loja</button>
+                                                        <button className="btn btn-primary">Acessar catálogo da loja</button>
                                                     </Link>
                                                 </div>
                                             </div>

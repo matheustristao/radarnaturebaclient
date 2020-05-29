@@ -69,9 +69,9 @@ export default class Loja extends Component {
 
         return (
             <div className="">
-                <header className="jumbotron text-center">
-                    <h1 className="display-4">Cadê meu produto natureba?</h1>
-                    <Link to="/" id="btnPesquisarProduto" type="button" className="btn btn-light">Refazer busca</Link>
+                <header className="masthead text-white text-center">
+                    <h1 className="mb-4">Cadê meu produto natureba?</h1>
+                    <Link to="/" id="btnPesquisarProduto" type="button" className="btn btn-primary">Refazer busca</Link>
                 </header>
                 <div id="showLojaDetail" className="container mb-4">
                     <div id="resultDetailTitle" className="row justify-content-center">
@@ -83,7 +83,7 @@ export default class Loja extends Component {
                             {this.state.arrayProdutos.map((produto, idx) => {
                                 return (
                                     <div key={idx} className="card">
-                                        <img className="card-img-top" src={this.loadImage(produto.idProduto)} alt={produto.nomeProduto}></img>
+                                        <img className="card-img-top img-thumbnail" src={this.loadImage(produto.idProduto)} alt={produto.nomeProduto}></img>
                                         <div className="card-body">
                                             <h5 className="card-title">{produto.nomeProduto}</h5>
                                             <h6 className="card-subtitle mb-2 text-muted">{this.dePara(produto.marcaProduto)}</h6>
